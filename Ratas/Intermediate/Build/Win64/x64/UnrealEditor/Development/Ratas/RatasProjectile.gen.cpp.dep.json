@@ -1,0 +1,15 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\ratas\\ratas\\intermediate\\build\\win64\\unrealeditor\\inc\\ratas\\uht\\ratasprojectile.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\ratas\\ratas\\intermediate\\build\\win64\\x64\\rataseditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "d:\\ratas\\ratas\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\ratas\\definitions.ratas.h",
+            "d:\\ratas\\ratas\\source\\ratas\\ratasprojectile.h",
+            "d:\\ratas\\ratas\\intermediate\\build\\win64\\unrealeditor\\inc\\ratas\\uht\\ratasprojectile.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

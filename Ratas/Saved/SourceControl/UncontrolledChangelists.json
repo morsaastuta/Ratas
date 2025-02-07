@@ -1,0 +1,52 @@
+{
+	"version": 1,
+	"changelists": [
+		{
+			"guid": "00000000000000000000000000000000",
+			"description": "Default Uncontrolled Changelist",
+			"files": [
+				"D:/Ratas/Ratas/Content/FirstPerson/Blueprints/BP_FirstPersonCharacter.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/W_Eyes.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/Eyes.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/Widgets/W_Eyes.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/Materials/M_EyeCenter.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/Materials/M_EyeLeft.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/Materials/M_EyeRight.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/M_EyeRight.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/M_EyeLeft.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/M_EyeCenter.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/Resources/Materials/M_EyeRight.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/Resources/Materials/M_EyeLeft.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/Resources/Materials/M_EyeCenter.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/RenderTargets/T_EyeCenter.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/RenderTargets/T_EyeLeft.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/RenderTargets/T_EyeRight.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/T_EyeRight.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/T_EyeLeft.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/T_EyeCenter.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/RenderTargets/RT_EyeCenter.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/RenderTargets/RT_EyeLeft.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/RenderTargets/RT_EyeRight.uasset",
+				"D:/Ratas/Ratas/Content/FirstPerson/Input/IMC_Default.uasset",
+				"D:/Ratas/Ratas/Content/FirstPerson/Blueprints/BP_PickUp_Rifle.uasset",
+				"D:/Ratas/Ratas/Content/FirstPerson/Input/IMC_Weapons.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/InputActions/IA_Jump.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/InputActions/IA_Look.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/InputActions/IA_Move.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/InputActions/IA_Shoot.uasset",
+				"D:/Ratas/Ratas/Content/FirstPerson/Input/Actions/IA_Shoot.uasset",
+				"D:/Ratas/Ratas/Content/FirstPerson/Input/Actions/IA_Move.uasset",
+				"D:/Ratas/Ratas/Content/FirstPerson/Input/Actions/IA_Look.uasset",
+				"D:/Ratas/Ratas/Content/FirstPerson/Input/Actions/IA_Jump.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/InputActions/IA_Run.uasset",
+				"D:/Ratas/Ratas/Content/FPWeapon/Mesh/SK_FPGun_Skeleton.uasset",
+				"D:/Ratas/Ratas/Content/FPWeapon/Mesh/SK_FPGun_PhysicsAsset.uasset",
+				"D:/Ratas/Ratas/Content/FPWeapon/Mesh/SK_FPGun_Physics.uasset",
+				"D:/Ratas/Ratas/Content/FirstPerson/Maps/FirstPersonMap.umap",
+				"D:/Ratas/Ratas/Content/__ExternalActors__/FirstPerson/Maps/FirstPersonMap/8/Z7/W1SXRCM1KAKBJOIZDLHZ47.uasset",
+				"D:/Ratas/Ratas/Content/__ExternalActors__/FirstPerson/Maps/FirstPersonMap/7/TL/RH3G0I3ZQ82LO6AJZ5YJKO.uasset",
+				"D:/Ratas/Ratas/Content/Ratas/Resources/Materials/NewMaterial.uasset"
+			]
+		}
+	]
+}
