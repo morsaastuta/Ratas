@@ -49,11 +49,11 @@ public:
 
 	//Functions
 protected:
-	void Move(const FInputActionValue& Value);
+	void Move(const FVector2d& Value);
 
-	void Look(const FInputActionValue& Value);
+	void Look(const FVector2d& Value);
 	
-	void Act(const FInputActionValue& Value);
+	void Act();
 	
 	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
 };
