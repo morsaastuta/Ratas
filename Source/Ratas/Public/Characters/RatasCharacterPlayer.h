@@ -33,5 +33,9 @@ public:
 	UCameraComponent* FirstPersonCameraComponent;
 	
 	//Functions
+private:
+	void MoveInput(const FInputActionValue& Value);
+	void LookInput(const FInputActionValue& Value);
+	void ActInput(const FInputActionValue& Value);
 	
 };
