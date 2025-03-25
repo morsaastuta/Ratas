@@ -25,7 +25,7 @@ public:
 	ARatasCharacter();
 
 protected:
-	virtual void BeginPlay();
+	virtual void BeginPlay() override;
 
 	//Variables
 public:
@@ -49,12 +49,10 @@ public:
 
 	//Functions
 protected:
-	void Move(const FVector2d& Value);
+	virtual void Move(const FVector2d& Value);
 
-	void Look(const FVector2d& Value);
+	virtual void Look(const FVector2d& Value);
 	
-	void Act();
-	
-	USkeletalMeshComponent* GetMesh1P() const { return Mesh1P; }
+	virtual void Act();
 };
 

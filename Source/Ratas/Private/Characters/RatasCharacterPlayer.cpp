@@ -85,3 +85,18 @@ void ARatasCharacterPlayer::ActInput(const FInputActionValue& Value)
 	if (Value.Get<bool>()) Act();
 }
 
+void ARatasCharacterPlayer::Move(const FVector2d& Value)
+{
+
+}
+
+void ARatasCharacterPlayer::Look(const FVector2d& Value)
+{
+
+}
+
+void ARatasCharacterPlayer::Act()
+{
+
+}
+

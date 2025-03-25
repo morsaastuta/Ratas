@@ -37,5 +37,12 @@ private:
 	void MoveInput(const FInputActionValue& Value);
 	void LookInput(const FInputActionValue& Value);
 	void ActInput(const FInputActionValue& Value);
+
+protected:
+	virtual void Move(const FVector2d& Value) override;
+
+	virtual void Look(const FVector2d& Value) override;
+
+	virtual void Act() override;
 	
 };
