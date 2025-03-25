@@ -26,14 +26,14 @@ ARatasCharacterPlayer::ARatasCharacterPlayer()
 	EyeRight->SetRelativeLocation(FVector(-10.f, 0.f, 60.f));
 
 	// Eye blend
-	//if (IsValid(WidgetReference))
+	if (IsValid(WidgetReference))
 	{
-		//EyeBlend = CreateWidget(GetWorld(), WidgetReference);
+		EyeBlend = CreateWidget(GetWorld(), WidgetReference);
 	}
 	
 	if (IsValid(EyeBlend))
 	{
-		//EyeBlend->AddToViewport();
+		EyeBlend->AddToViewport();
 	}
 }
 

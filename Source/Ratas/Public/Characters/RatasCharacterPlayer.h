@@ -23,8 +23,8 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	USceneCaptureComponent2D* EyeRight;
 
-	//UPROPERTY(EditDefaultsOnly, Category = "UI")
-	//TSubclassOf<class UUserWidget> WidgetReference;
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<class UUserWidget> WidgetReference;
 	
 	UPROPERTY()
 	UUserWidget* EyeBlend;
