@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "Camera/CameraComponent.h"
-#include "GameFramework/Character.h"
 #include "Ratas/RatasCharacter.h"
 #include "RatasCharacterPlayer.generated.h"
 
@@ -14,35 +13,37 @@ class RATAS_API ARatasCharacterPlayer : public ARatasCharacter
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this character's properties
-	ARatasCharacterPlayer();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	//Variables
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
-	UCameraComponent* FirstPersonCameraComponent;
+	UCameraComponent* Camera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	USceneCaptureComponent2D* EyeLeft;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	USceneCaptureComponent2D* EyeRight;
+
+	//UPROPERTY(EditDefaultsOnly, Category = "UI")
+	//TSubclassOf<class UUserWidget> WidgetReference;
 	
-	//Functions
-private:
+	UPROPERTY()
+	UUserWidget* EyeBlend;
+	
+	ARatasCharacterPlayer();
+	
+	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void Tick(float DeltaTime) override;
+
+protected:
+	
+	virtual void BeginPlay() override;
+	
 	void MoveInput(const FInputActionValue& Value);
 	void LookInput(const FInputActionValue& Value);
 	void ActInput(const FInputActionValue& Value);
-
-protected:
+	
 	virtual void Move(const FVector2d& Value) override;
-
 	virtual void Look(const FVector2d& Value) override;
-
 	virtual void Act() override;
 	
 };
