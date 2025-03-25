@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Ratas/RatasCharacter.h"
 #include "RatasCharacterPlayer.generated.h"
 
 UCLASS()
-class RATAS_API ARatasCharacterPlayer : public ACharacter
+class RATAS_API ARatasCharacterPlayer : public ARatasCharacter
 {
 	GENERATED_BODY()
 

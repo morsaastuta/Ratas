@@ -1,7 +1,6 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+#include "Characters/RatasCharacterPlayer.h"
 
 
-#include "Ratas/Public/Characters/RatasCharacterPlayer.h"
 
 // Sets default values
 ARatasCharacterPlayer::ARatasCharacterPlayer()
