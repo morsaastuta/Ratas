@@ -89,32 +89,3 @@ void ARatasCharacterPlayer::ActInput(const FInputActionValue& Value)
 	if (Value.Get<bool>()) Act();
 }
 
-void ARatasCharacterPlayer::Move(const FVector2d& Value)
-{
-	float horizontal = Value.X;
-	float vertical = Value.Y;
-
-	// Find out which way is forward
-	const FRotator Rotation = Controller->GetControlRotation();
-	const FRotator YawRotation(0, Rotation.Yaw, 0);
- 
-	// Get forward vector
-	const FVector DirectionH = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-	
-	// Get right vector
-	const FVector DirectionV = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	AddMovementInput(DirectionH, horizontal);
-	AddMovementInput(DirectionV, vertical);
-}
-
-void ARatasCharacterPlayer::Look(const FVector2d& Value)
-{
-	AddControllerYawInput(Value.X);
-	AddControllerPitchInput(Value.Y);
-}
-
-void ARatasCharacterPlayer::Act()
-{
-
-}
-
