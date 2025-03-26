@@ -3,6 +3,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SceneCaptureComponent2D.h"
+#include "Logging/StructuredLog.h"
 
 
 // Sets default values
@@ -35,6 +36,8 @@ ARatasCharacterPlayer::ARatasCharacterPlayer()
 	{
 		EyeBlend->AddToViewport();
 	}
+
+	IsMoving = false;
 }
 
 void ARatasCharacterPlayer::BeginPlay()
@@ -47,6 +50,9 @@ void ARatasCharacterPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	Acceleration = IsMoving ? FMath::Clamp(Acceleration + 0.01, 1, 4) : FMath::Clamp(Acceleration - 0.01, 1, 4);
+	
+
 	
 }
 
@@ -56,8 +62,11 @@ void ARatasCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInp
 	{
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Canceled, this, &ACharacter::StopJumping);
 
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &ARatasCharacterPlayer::MoveInput);
+		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Completed, this, &ARatasCharacterPlayer::StopInput);
+		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Canceled, this, &ARatasCharacterPlayer::StopInput);
 
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ARatasCharacterPlayer::LookInput);
 		
@@ -71,7 +80,10 @@ void ARatasCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInp
 
 void ARatasCharacterPlayer::MoveInput(const FInputActionValue& Value)
 {
-	printf("MUVIN");
+	UE_LOGFMT(LogTemplateCharacter, Log, "Hello {Value} World", ("Value" , Value.ToString()));
+
+	IsMoving = true;
+	
 	Move(Value.Get<FVector2d>());
 }
 
@@ -87,5 +99,12 @@ void ARatasCharacterPlayer::ActInput(const FInputActionValue& Value)
 	printf("ACTIN");
 
 	if (Value.Get<bool>()) Act();
+}
+
+void ARatasCharacterPlayer::StopInput(const FInputActionValue& _)
+{
+	
+	UE_LOGFMT(LogTemplateCharacter, Log, "Stoppeao");
+	IsMoving = false;
 }
 

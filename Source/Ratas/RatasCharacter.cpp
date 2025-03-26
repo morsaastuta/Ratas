@@ -15,6 +15,12 @@ ARatasCharacter::ARatasCharacter()
 {
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
+
+	Acceleration = 1.f;
+	Speed = 1.f;
+	HealthMax = 1.f;
+	Health = 1.f;
+	
 	
 	//Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
 	//Mesh1P->SetOnlyOwnerSee(true);
@@ -34,8 +40,8 @@ void ARatasCharacter::BeginPlay()
 
 void ARatasCharacter::Move(const FVector2d& Value)
 {
-	float horizontal = Value.X;
-	float vertical = Value.Y;
+	const float Horizontal = Value.X;
+	const float Vertical = Value.Y;
 
 	// Find out which way is forward
 	const FRotator Rotation = Controller->GetControlRotation();
@@ -46,8 +52,8 @@ void ARatasCharacter::Move(const FVector2d& Value)
 	
 	// Get right vector
 	const FVector DirectionV = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	AddMovementInput(DirectionH, horizontal);
-	AddMovementInput(DirectionV, vertical);
+	AddMovementInput(DirectionH, Horizontal * Speed);
+	AddMovementInput(DirectionV, Vertical * Speed);
 }
 
 void ARatasCharacter::Look(const FVector2d& Value)
@@ -67,7 +73,7 @@ void ARatasCharacter::ChangeHealth(const int Value)
 	else if (Value > 0) printf("Cure" + Value);
 	else printf("?????????????" + Value);
 	
-	Health = FMath::Clamp(Value, 0, HealthMax);
+	Health = FMath::Clamp(Health + Value, 0, HealthMax);
 	
 	if (Health <= 0)
 	{

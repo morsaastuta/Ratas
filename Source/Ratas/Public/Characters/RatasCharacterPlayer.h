@@ -29,6 +29,9 @@ public:
 	UPROPERTY()
 	UUserWidget* EyeBlend;
 	
+	UPROPERTY()
+	bool IsMoving;
+	
 	ARatasCharacterPlayer();
 	
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -41,5 +44,7 @@ protected:
 	void MoveInput(const FInputActionValue& Value);
 	void LookInput(const FInputActionValue& Value);
 	void ActInput(const FInputActionValue& Value);
+	void StopInput(const FInputActionValue& _);
+
 	
 };
