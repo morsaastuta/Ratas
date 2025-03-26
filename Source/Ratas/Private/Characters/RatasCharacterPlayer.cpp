@@ -52,7 +52,6 @@ void ARatasCharacterPlayer::Tick(float DeltaTime)
 
 void ARatasCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {	
-	// Set up action bindings
 	if (UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
 		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
@@ -72,27 +71,46 @@ void ARatasCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInp
 
 void ARatasCharacterPlayer::MoveInput(const FInputActionValue& Value)
 {
+	printf("MUVIN");
 	Move(Value.Get<FVector2d>());
 }
 
 void ARatasCharacterPlayer::LookInput(const FInputActionValue& Value)
 {
+	printf("LUKIN");
+
 	Look(Value.Get<FVector2d>());
 }
 
 void ARatasCharacterPlayer::ActInput(const FInputActionValue& Value)
 {
+	printf("ACTIN");
+
 	if (Value.Get<bool>()) Act();
 }
 
 void ARatasCharacterPlayer::Move(const FVector2d& Value)
 {
+	float horizontal = Value.X;
+	float vertical = Value.Y;
 
+	// Find out which way is forward
+	const FRotator Rotation = Controller->GetControlRotation();
+	const FRotator YawRotation(0, Rotation.Yaw, 0);
+ 
+	// Get forward vector
+	const FVector DirectionH = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	
+	// Get right vector
+	const FVector DirectionV = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	AddMovementInput(DirectionH, horizontal);
+	AddMovementInput(DirectionV, vertical);
 }
 
 void ARatasCharacterPlayer::Look(const FVector2d& Value)
 {
-
+	AddControllerYawInput(Value.X);
+	AddControllerPitchInput(Value.Y);
 }
 
 void ARatasCharacterPlayer::Act()

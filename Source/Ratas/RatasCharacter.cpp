@@ -20,13 +20,13 @@ ARatasCharacter::ARatasCharacter()
 	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
 	
-	Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
-	Mesh1P->SetOnlyOwnerSee(true);
+	//Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
+	//Mesh1P->SetOnlyOwnerSee(true);
 	
-	Mesh1P->bCastDynamicShadow = false;
-	Mesh1P->CastShadow = false;
+	//Mesh1P->bCastDynamicShadow = false;
+	//Mesh1P->CastShadow = false;
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
-	Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
+	//Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 
 }
 
