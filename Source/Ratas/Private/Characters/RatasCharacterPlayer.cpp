@@ -15,7 +15,7 @@ ARatasCharacterPlayer::ARatasCharacterPlayer()
 	Camera->SetupAttachment(GetCapsuleComponent());
 	Camera->SetRelativeLocation(FVector(-10.f, 0.f, 60.f));
 	Camera->bUsePawnControlRotation = true;
-	Mesh1P->SetupAttachment(Camera);
+	GetMesh()->SetupAttachment(Camera);
 
 	// Eyes
 	EyeLeft = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("EyeLeft"));
