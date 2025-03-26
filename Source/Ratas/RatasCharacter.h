@@ -42,6 +42,13 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* ActAction;
 
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true"))
+	int Health;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true"))
+	int HealthMax;
+
 
 
 	//Functions
@@ -51,5 +58,9 @@ protected:
 	virtual void Look(const FVector2d& Value);
 	
 	virtual void Act();
+
+	virtual void ChangeHealth(int Value);
+
+	virtual void Die();
 };
 

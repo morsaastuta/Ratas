@@ -2,12 +2,8 @@
 
 #include "RatasCharacter.h"
 #include "Animation/AnimInstance.h"
-#include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
-#include "EnhancedInputComponent.h"
-#include "EnhancedInputSubsystems.h"
-#include "InputActionValue.h"
 #include "Engine/LocalPlayer.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
@@ -50,4 +46,23 @@ void ARatasCharacter::Look(const FVector2d& Value)
 void ARatasCharacter::Act()
 {
 	
+}
+
+void ARatasCharacter::ChangeHealth(const int Value)
+{
+	if (Value < 0) printf("Dao");
+	else if (Value > 0) printf("Cure" + Value);
+	else printf("?????????????" + Value);
+	
+	Health = FMath::Clamp(Value, 0, HealthMax);
+	
+	if (Health <= 0)
+	{
+		Die();
+	}
+}
+
+void ARatasCharacter::Die()
+{
+	printf("DIE");
 }
