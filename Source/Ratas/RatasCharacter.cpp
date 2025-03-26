@@ -5,6 +5,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/LocalPlayer.h"
+#include "Logging/StructuredLog.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -52,8 +53,11 @@ void ARatasCharacter::Move(const FVector2d& Value)
 	
 	// Get right vector
 	const FVector DirectionV = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	AddMovementInput(DirectionH, Horizontal * Speed);
-	AddMovementInput(DirectionV, Vertical * Speed);
+	AddMovementInput(DirectionH, Horizontal * Speed * Acceleration);
+	AddMovementInput(DirectionV, Vertical * Speed * Acceleration);
+	
+	//UE_LOGFMT(LogTemplateCharacter, Log, "{Value}", ("Value" , GetVelocity().ToString()));
+
 }
 
 void ARatasCharacter::Look(const FVector2d& Value)

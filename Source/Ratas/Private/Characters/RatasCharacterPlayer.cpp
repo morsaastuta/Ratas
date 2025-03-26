@@ -3,6 +3,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SceneCaptureComponent2D.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Logging/StructuredLog.h"
 
 
@@ -50,8 +51,13 @@ void ARatasCharacterPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	Acceleration = IsMoving ? FMath::Clamp(Acceleration + 0.01, 1, 4) : FMath::Clamp(Acceleration - 0.01, 1, 4);
+	Acceleration = IsMoving ? FMath::Clamp(Acceleration + 0.01f, 1.f, 4.f) : FMath::Clamp(Acceleration - 0.01f, 1.f, 4.f);
+
+	GetCharacterMovement()->MaxAcceleration = Acceleration * 1000.f;
+
 	
+	//UE_LOGFMT(LogTemplateCharacter, Log, "{Value}", ("Value" , Acceleration));
+
 
 	
 }
@@ -80,7 +86,7 @@ void ARatasCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInp
 
 void ARatasCharacterPlayer::MoveInput(const FInputActionValue& Value)
 {
-	UE_LOGFMT(LogTemplateCharacter, Log, "Hello {Value} World", ("Value" , Value.ToString()));
+	//UE_LOGFMT(LogTemplateCharacter, Log, "Hello {Value} World", ("Value" , Value.ToString()));
 
 	IsMoving = true;
 	
@@ -89,14 +95,14 @@ void ARatasCharacterPlayer::MoveInput(const FInputActionValue& Value)
 
 void ARatasCharacterPlayer::LookInput(const FInputActionValue& Value)
 {
-	printf("LUKIN");
+	//printf("LUKIN");
 
 	Look(Value.Get<FVector2d>());
 }
 
 void ARatasCharacterPlayer::ActInput(const FInputActionValue& Value)
 {
-	printf("ACTIN");
+	//printf("ACTIN");
 
 	if (Value.Get<bool>()) Act();
 }
@@ -104,7 +110,7 @@ void ARatasCharacterPlayer::ActInput(const FInputActionValue& Value)
 void ARatasCharacterPlayer::StopInput(const FInputActionValue& _)
 {
 	
-	UE_LOGFMT(LogTemplateCharacter, Log, "Stoppeao");
+	//UE_LOGFMT(LogTemplateCharacter, Log, "Stoppeao");
 	IsMoving = false;
 }
 
