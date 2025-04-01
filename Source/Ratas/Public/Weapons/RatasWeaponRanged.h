@@ -13,5 +13,15 @@ UCLASS()
 class RATAS_API ARatasWeaponRanged : public ARatasWeapon
 {
 	GENERATED_BODY()
+public:
+
+	UPROPERTY(Category=Weapon, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	int Ammo;
+
+	UPROPERTY(Category=Weapon, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	float ReloadTime;
+	
+	UPROPERTY(Category=Weapon, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	AActor* Bullet;
 	
 };

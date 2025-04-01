@@ -4,24 +4,8 @@
 #include "Props/RatasBullet.h"
 
 // Sets default values
-ARatasBullet::ARatasBullet()
+ARatasBullet::ARatasBullet(const int _Damage, const float _Speed, const float _ReloadTimer, const FVector& _Location, const FRotator& _Rotation): Damage(_Damage), Speed(_Speed), DespawnTimer(_ReloadTimer)
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
+	SetActorRotation(_Rotation);
+	SetActorLocation(_Location);
 }
-
-// Called when the game starts or when spawned
-void ARatasBullet::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void ARatasBullet::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-

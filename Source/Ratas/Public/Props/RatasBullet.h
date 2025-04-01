@@ -10,17 +10,19 @@ UCLASS()
 class RATAS_API ARatasBullet : public AActor
 {
 	GENERATED_BODY()
+
+public:
 	
-public:	
+	UPROPERTY(Category=Weapon, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	int Damage;
+
+	UPROPERTY(Category=Weapon, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	float Speed;
+
+	UPROPERTY(Category=Weapon, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	float DespawnTimer;
+	
 	// Sets default values for this actor's properties
-	ARatasBullet();
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	ARatasBullet(int _Damage, float _Speed, float _ReloadTimer, const FVector& _Location, const FRotator& _Rotation);
 
 };
