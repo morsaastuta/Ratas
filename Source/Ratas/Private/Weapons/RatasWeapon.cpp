@@ -3,32 +3,33 @@
 
 #include "Weapons/RatasWeapon.h"
 
-// Sets default values for this component's properties
-URatasWeapon::URatasWeapon()
+// Sets default values
+ARatasWeapon::ARatasWeapon()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
+	Damage = 0;
+	Delay = 0;
+	
+ 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	PrimaryActorTick.bCanEverTick = true;
+
 }
 
-
-// Called when the game starts
-void URatasWeapon::BeginPlay()
+// Called when the game starts or when spawned
+void ARatasWeapon::BeginPlay()
 {
 	Super::BeginPlay();
-
-	// ...
 	
 }
 
-
 // Called every frame
-void URatasWeapon::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+void ARatasWeapon::Tick(float DeltaTime)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	Super::Tick(DeltaTime);
 
-	// ...
+}
+
+void ARatasWeapon::Trigger()
+{
 }
 

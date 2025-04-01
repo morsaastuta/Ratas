@@ -56,7 +56,7 @@ void ARatasCharacter::Move(const FVector2d& Value)
 	AddMovementInput(DirectionH, Horizontal * Speed * Acceleration);
 	AddMovementInput(DirectionV, Vertical * Speed * Acceleration);
 	
-	//UE_LOGFMT(LogTemplateCharacter, Log, "{Value}", ("Value" , GetVelocity().ToString()));
+	UE_LOGFMT(LogTemplateCharacter, Log, "{Value}", ("Value" , GetVelocity().ToString()));
 
 }
 

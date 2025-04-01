@@ -51,9 +51,9 @@ void ARatasCharacterPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	Acceleration = IsMoving ? FMath::Clamp(Acceleration + 0.01f, 1.f, 4.f) : FMath::Clamp(Acceleration - 0.01f, 1.f, 4.f);
+	Acceleration = IsMoving ? FMath::Clamp(Acceleration + 0.01f, 1.f, 4.f) : FMath::Clamp(Acceleration - 0.02f, 1.f, 4.f);
 
-	GetCharacterMovement()->MaxAcceleration = Acceleration * 1000.f;
+	GetCharacterMovement()->MaxAcceleration = Acceleration * 200.f;
 
 	
 	//UE_LOGFMT(LogTemplateCharacter, Log, "{Value}", ("Value" , Acceleration));
