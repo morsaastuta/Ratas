@@ -3,9 +3,29 @@
 
 #include "Props/RatasBullet.h"
 
-// Sets default values
+#include "Components/SphereComponent.h"
+#include "Logging/StructuredLog.h"
+#include "Ratas/RatasCharacter.h"
+
+ARatasBullet::ARatasBullet()
+{
+	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereColliderCoso"));
+	CollisionSphere->OnComponentBeginOverlap.AddDynamic(this, &ARatasBullet::OnBeginOverlap);
+}
+
 ARatasBullet::ARatasBullet(const int _Damage, const float _Speed, const float _ReloadTimer, const FVector& _Location, const FRotator& _Rotation): Damage(_Damage), Speed(_Speed), DespawnTimer(_ReloadTimer)
 {
 	SetActorRotation(_Rotation);
 	SetActorLocation(_Location);
+
+	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Sphere"));
+	CollisionSphere->OnComponentBeginOverlap.AddDynamic(this, &ARatasBullet::OnBeginOverlap);
+}
+
+void ARatasBullet::OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor->GetClass()->GetSuperClass()->GetSuperClass() == ARatasCharacter::StaticClass())
+	{
+		UE_LOGFMT(LogTemplateCharacter, Log,"Me disyte weonm");
+	}
 }
