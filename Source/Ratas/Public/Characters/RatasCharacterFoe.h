@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "RatasCharacter.h"
+#include "Ratas/RatasCharacter.h"
 #include "RatasCharacterFoe.generated.h"
 
 /**
