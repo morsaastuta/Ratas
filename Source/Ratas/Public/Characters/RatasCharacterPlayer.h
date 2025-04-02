@@ -7,6 +7,8 @@
 #include "Ratas/RatasCharacter.h"
 #include "RatasCharacterPlayer.generated.h"
 
+class ARatasWeapon;
+
 UCLASS()
 class RATAS_API ARatasCharacterPlayer : public ARatasCharacter
 {
@@ -15,12 +17,12 @@ class RATAS_API ARatasCharacterPlayer : public ARatasCharacter
 public:
 
 	//Variables
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	UCameraComponent* Camera;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	USceneCaptureComponent2D* EyeLeft;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	USceneCaptureComponent2D* EyeRight;
 
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
@@ -29,7 +31,10 @@ public:
 	UPROPERTY()
 	UUserWidget* EyeBlend;
 	
-	UPROPERTY()
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	ARatasWeapon* WeaponCurrent;
+	
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	bool IsMoving;
 	
 	ARatasCharacterPlayer();

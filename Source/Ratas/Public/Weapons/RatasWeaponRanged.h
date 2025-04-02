@@ -6,6 +6,7 @@
 #include "Weapons/RatasWeapon.h"
 #include "RatasWeaponRanged.generated.h"
 
+class ARatasBullet;
 /**
  * 
  */
@@ -13,15 +14,29 @@ UCLASS()
 class RATAS_API ARatasWeaponRanged : public ARatasWeapon
 {
 	GENERATED_BODY()
+	
 public:
+	
+	UPROPERTY(Category=Weapon, EditAnywhere)
+	AActor* Bullet;
 
-	UPROPERTY(Category=Weapon, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
+	float ReloadTime;
+
+	UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
+	float Impulse;
+
+	UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
+	bool ProximityDamage;
+
+	UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
+	int AmmoMax;
+
+	UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
 	int Ammo;
 
-	UPROPERTY(Category=Weapon, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
-	float ReloadTime;
-	
-	UPROPERTY(Category=Weapon, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
-	AActor* Bullet;
+	ARatasWeaponRanged();
+
+	ARatasBullet* Shoot();
 	
 };

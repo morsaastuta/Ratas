@@ -14,29 +14,25 @@ class RATAS_API ARatasBullet : public AActor
 	GENERATED_BODY()
 
 public:
+
+	UPROPERTY(Category=Weapon, EditAnywhere)
+	USphereComponent* CollisionSphere;
 	
-	UPROPERTY(Category=Weapon, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	int Damage;
 
-	UPROPERTY(Category=Weapon, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	float Speed;
 
-	UPROPERTY(Category=Weapon, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	UPROPERTY(Category=Weapon, EditAnywhere,BlueprintReadWrite , meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	bool ProximityDamage;
+
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	float DespawnTimer;
 
-	UPROPERTY(Category=Weapon, VisibleAnywhere)
-	USphereComponent* CollisionSphere;
-
-	
 	ARatasBullet();
-	
-	// Sets default values for this actor's properties
-	ARatasBullet(int _Damage, float _Speed, float _ReloadTimer, const FVector& _Location, const FRotator& _Rotation);
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	ARatasBullet(int _Damage, float _Speed, bool _ProximityDamage);
 	
 	UFUNCTION()
-	void OnBeginOverlap(class UPrimitiveComponent* Comp ,class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	void OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
