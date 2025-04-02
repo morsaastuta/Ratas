@@ -24,7 +24,7 @@ void ARatasWeapon::OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor*
 		CollisionBox->UnregisterComponent();
 		ARatasCharacterPlayer* Player = Cast<ARatasCharacterPlayer>(OtherActor);
 		Player->WeaponCurrent = this;
-		AttachToActor(Player, FAttachmentTransformRules (EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative, false));
+		AttachToComponent(Player->Camera, FAttachmentTransformRules (EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative, false));
 		UE_LOGFMT(LogTemp, Log,"Me cogiste weonm");
 	}
 }
