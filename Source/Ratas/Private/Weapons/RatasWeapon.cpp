@@ -2,34 +2,29 @@
 
 
 #include "Weapons/RatasWeapon.h"
+#include "Ratas/Public/Characters/RatasCharacterPlayer.h"
+#include "Logging/StructuredLog.h"
+
 
 // Sets default values
-ARatasWeapon::ARatasWeapon()
+ARatasWeapon::ARatasWeapon(): Damage(0), Delay(0)
 {
+	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxColliderCoso"));
+	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ARatasWeapon::OnBeginOverlap);
 
-	Damage = 0;
-	Delay = 0;
-	
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
+	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Mesh"));
+	Mesh->SetupAttachment(CollisionBox);
 }
 
-// Called when the game starts or when spawned
-void ARatasWeapon::BeginPlay()
+void ARatasWeapon::OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	Super::BeginPlay();
-	
+	UE_LOGFMT(LogTemp, Log,"??");
+	if (OtherActor->GetClass()->GetSuperClass() == ARatasCharacterPlayer::StaticClass())
+	{
+		CollisionBox->UnregisterComponent();
+		ARatasCharacterPlayer* Player = Cast<ARatasCharacterPlayer>(OtherActor);
+		Player->WeaponCurrent = this;
+		AttachToActor(Player, FAttachmentTransformRules (EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative, false));
+		UE_LOGFMT(LogTemp, Log,"Me cogiste weonm");
+	}
 }
-
-// Called every frame
-void ARatasWeapon::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
-
-void ARatasWeapon::Trigger()
-{
-}
-

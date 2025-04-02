@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
 #include "RatasWeapon.generated.h"
 
@@ -11,29 +12,25 @@ class RATAS_API ARatasWeapon : public AActor
 {
 	GENERATED_BODY()
 	
-public:	
-		
-	UPROPERTY(Category=Weapon, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
-	int Damage;
+public:
 
-	UPROPERTY(Category=Weapon, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
-	float Delay;
-
-	UPROPERTY(Category=Weapon, VisibleAnywhere, BlueprintReadOnly, meta=(AllowPrivateAccess = "true"))
+	UPROPERTY(Category=Character, EditAnywhere, meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<USkeletalMeshComponent> Mesh;
 
-	// Sets default values for this actor's properties
+	UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
+	UBoxComponent* CollisionBox;
+		
+	UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
+	int Damage;
+
+	UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
+	float Delay;
+
 	ARatasWeapon();
 
-	
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Ratas")
+	void Trigger();
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
-	virtual void Trigger();
-
+	UFUNCTION()
+	void OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
