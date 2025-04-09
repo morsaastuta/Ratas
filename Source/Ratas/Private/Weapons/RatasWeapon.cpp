@@ -18,7 +18,6 @@ ARatasWeapon::ARatasWeapon(): Damage(0), Delay(0)
 
 void ARatasWeapon::OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOGFMT(LogTemp, Log,"??");
 	if (OtherActor->GetClass()->GetSuperClass() == ARatasCharacterPlayer::StaticClass())
 	{
 		CollisionBox->UnregisterComponent();
