@@ -14,8 +14,8 @@ class RATAS_API ARatasWeapon : public AActor
 	
 public:
 
-	UPROPERTY(Category=Character, EditAnywhere, meta=(AllowPrivateAccess = "true"))
-	TObjectPtr<USkeletalMeshComponent> Mesh;
+	UPROPERTY(Category=Character, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+	TObjectPtr<UStaticMeshComponent> Mesh;
 
 	UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
 	UBoxComponent* CollisionBox;

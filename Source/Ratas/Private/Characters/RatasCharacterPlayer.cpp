@@ -26,7 +26,6 @@ ARatasCharacterPlayer::ARatasCharacterPlayer()
 	EyeRight->SetupAttachment(GetCapsuleComponent());
 	EyeLeft->SetRelativeLocation(FVector(-10.f, 0.f, 60.f));
 	EyeRight->SetRelativeLocation(FVector(-10.f, 0.f, 60.f));
-
 	// Eye blend
 	if (IsValid(WidgetReference))
 	{
