@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Ratas/RatasCharacter.h"
 #include "RatasBullet.generated.h"
 
 class USphereComponent;
@@ -30,8 +31,10 @@ public:
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	float DespawnTimer;
 
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	TSubclassOf<ARatasCharacter> Source;
+
 	ARatasBullet();
-	ARatasBullet(int _Damage, float _Speed, bool _ProximityDamage);
 	
 	UFUNCTION()
 	void OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

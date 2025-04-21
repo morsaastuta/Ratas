@@ -24,7 +24,7 @@ void ARatasWeapon::OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor*
 		ARatasCharacterPlayer* Player = Cast<ARatasCharacterPlayer>(OtherActor);
 		Player->WeaponCurrent = this;
 		AttachToComponent(Player->Camera, FAttachmentTransformRules (EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative, false));
-		
+		Source = Player->GetClass()->GetSuperClass();
 		Mesh->SetRelativeLocation(FVector(20.f, 20.f, -7.f));
 		UE_LOGFMT(LogTemp, Log,"Me cogiste weonm");
 	}

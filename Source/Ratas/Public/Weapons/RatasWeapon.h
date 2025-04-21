@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/BoxComponent.h"
+#include "Ratas/RatasCharacter.h"
 #include "GameFramework/Actor.h"
 #include "RatasWeapon.generated.h"
 
@@ -25,6 +26,9 @@ public:
 
 	UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
 	float Delay;
+
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	TSubclassOf<ARatasCharacter> Source;
 
 	ARatasWeapon();
 
