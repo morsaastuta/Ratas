@@ -59,9 +59,12 @@ public:
 
 	//Functions
 protected:
-	virtual void Move(const FVector2d& Value);
+	
+	UFUNCTION(BlueprintCallable, Category="Ratas")
+	virtual void Move(const FVector& Value);
 
-	virtual void Look(const FVector2d& Value);
+	UFUNCTION(BlueprintCallable, Category="Ratas")
+	virtual void Look(const FVector& Value);
 	
 	virtual void Act();
 

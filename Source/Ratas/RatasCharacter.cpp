@@ -39,28 +39,34 @@ void ARatasCharacter::BeginPlay()
 }
 
 
-void ARatasCharacter::Move(const FVector2d& Value)
+void ARatasCharacter::Move(const FVector& Value)
 {
-	const float Horizontal = Value.X;
-	const float Vertical = Value.Y;
+	const float Frontal = Value.X;
+	const float Lateral = Value.Y;
+	const float Vertical = Value.Z;
 
 	// Find out which way is forward
-	const FRotator Rotation = Controller->GetControlRotation();
-	const FRotator YawRotation(0, Rotation.Yaw, 0);
+	const FRotator Rot = Controller->GetControlRotation();
+	const FRotator RotYaw(0, Rot.Yaw, 0);
  
 	// Get forward vector
-	const FVector DirectionH = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	const FVector DirFrontal = FRotationMatrix(RotYaw).GetUnitAxis(EAxis::Y);
+	AddMovementInput(DirFrontal, Frontal * Speed * Acceleration);
 	
 	// Get right vector
-	const FVector DirectionV = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	AddMovementInput(DirectionH, Horizontal * Speed * Acceleration);
-	AddMovementInput(DirectionV, Vertical * Speed * Acceleration);
+	const FVector DirLateral = FRotationMatrix(RotYaw).GetUnitAxis(EAxis::X);
+	AddMovementInput(DirLateral, Lateral * Speed * Acceleration);
+	
+	// Get up vector
+	const FVector DirVertical = FRotationMatrix(RotYaw).GetUnitAxis(EAxis::Z);
+	AddMovementInput(DirVertical, Vertical * Speed * Acceleration);
+	
 	
 	//UE_LOGFMT(LogTemplateCharacter, Log, "{Value}", ("Value" , GetVelocity().ToString()));
 
 }
 
-void ARatasCharacter::Look(const FVector2d& Value)
+void ARatasCharacter::Look(const FVector& Value)
 {
 	AddControllerYawInput(Value.X);
 	AddControllerPitchInput(Value.Y);

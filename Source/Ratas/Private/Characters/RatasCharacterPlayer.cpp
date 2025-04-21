@@ -89,14 +89,14 @@ void ARatasCharacterPlayer::MoveInput(const FInputActionValue& Value)
 
 	IsMoving = true;
 	
-	Move(Value.Get<FVector2d>());
+	Move(Value.Get<FVector3d>());
 }
 
 void ARatasCharacterPlayer::LookInput(const FInputActionValue& Value)
 {
 	//printf("LUKIN");
 
-	Look(Value.Get<FVector2d>());
+	Look(Value.Get<FVector3d>());
 }
 
 void ARatasCharacterPlayer::ActInput(const FInputActionValue& Value)

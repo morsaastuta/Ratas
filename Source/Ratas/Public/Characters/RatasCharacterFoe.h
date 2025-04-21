@@ -3,15 +3,36 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/SphereComponent.h"
 #include "Ratas/RatasCharacter.h"
 #include "RatasCharacterFoe.generated.h"
 
 /**
  * 
  */
+class USphereComponent;
+
 UCLASS()
 class RATAS_API ARatasCharacterFoe : public ARatasCharacter
 {
 	GENERATED_BODY()
+
+
+	//Functions
+public:
+	ARatasCharacterFoe();
+	
+protected:
+
+	UPROPERTY(Category=Detector, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	float OverlapRange;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	USphereComponent* OverlapComp;
+
+	virtual void BeginPlay() override;
+	
+	UFUNCTION(BlueprintCallable, Category="Ratas")
+	bool DetectPlayer();
 	
 };
