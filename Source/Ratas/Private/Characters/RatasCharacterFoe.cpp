@@ -2,6 +2,7 @@
 
 
 #include "Characters/RatasCharacterFoe.h"
+#include "Chaos/Utilities.h"
 #include "Characters/RatasCharacterPlayer.h"
 #include "Logging/StructuredLog.h"
 
@@ -9,6 +10,11 @@ ARatasCharacterFoe::ARatasCharacterFoe(): OverlapRange(0)
 {
 	OverlapComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereOverlap"));
 	OverlapComp->SetupAttachment(RootComponent);
+}
+
+void ARatasCharacterFoe::LookAt(FVector Location)
+{
+	TargetLocation = Location;
 }
 
 void ARatasCharacterFoe::BeginPlay() 
@@ -28,6 +34,7 @@ bool ARatasCharacterFoe::DetectPlayer()
 		if (OverlappingActor->IsA(ARatasCharacterPlayer::StaticClass()))
 		{
 			UE_LOGFMT(LogTemp, Log,"te vi weon");
+			LookAt(OverlappingActor->GetActorLocation());
 			return true;
 		}
 	}

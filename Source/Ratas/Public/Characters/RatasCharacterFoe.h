@@ -31,8 +31,13 @@ protected:
 	USphereComponent* OverlapComp;
 
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	FVector TargetLocation;
 	
 	UFUNCTION(BlueprintCallable, Category="Ratas")
 	bool DetectPlayer();
+
+	void LookAt(FVector Location);
 	
 };
