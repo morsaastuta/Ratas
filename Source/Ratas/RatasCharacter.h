@@ -26,6 +26,7 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 
 	//Variables
 public:
@@ -54,8 +55,12 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true"))
 	float Acceleration;
-
-
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	float HitCooldownMax;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = true))
+	float HitCooldown;
 
 	//Functions
 protected:
@@ -69,7 +74,11 @@ protected:
 	virtual void Act();
 
 	virtual void ChangeHealth(int Value);
-
+	
 	virtual void Die();
+
+public:
+	virtual void GetHit(const int Value);
+
 };
 

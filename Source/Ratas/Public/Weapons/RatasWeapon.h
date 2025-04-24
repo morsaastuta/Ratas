@@ -27,9 +27,6 @@ public:
 	UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
 	float Delay;
 
-	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	TSubclassOf<ARatasCharacter> Source;
-
 	ARatasWeapon();
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category="Ratas")

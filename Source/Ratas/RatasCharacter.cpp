@@ -38,6 +38,12 @@ void ARatasCharacter::BeginPlay()
 	Super::BeginPlay();
 }
 
+void ARatasCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (HitCooldown <= HitCooldownMax) HitCooldown += DeltaTime;
+}
 
 void ARatasCharacter::Move(const FVector& Value)
 {
@@ -88,6 +94,16 @@ void ARatasCharacter::ChangeHealth(const int Value)
 	if (Health <= 0)
 	{
 		Die();
+	}
+}
+
+void ARatasCharacter::GetHit(const int Value)
+{
+	if (HitCooldown >= HitCooldownMax)
+	{
+		UE_LOGFMT(LogTemplateCharacter, Log,"Me disyte weonm");
+		HitCooldown = 0;
+		ChangeHealth(Value);
 	}
 }
 

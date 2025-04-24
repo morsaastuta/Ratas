@@ -20,24 +20,19 @@ void ARatasCharacterFoe::LookAt(FVector Location)
 void ARatasCharacterFoe::BeginPlay() 
 {
 	Super::BeginPlay();
-	OverlapComp->InitSphereRadius(OverlapRange);
+	OverlapComp->SetSphereRadius(OverlapRange);
 }
 
 bool ARatasCharacterFoe::DetectPlayer()
 {
 	TArray<AActor*> OverlappingActors;
 	
-	OverlapComp->GetOverlappingActors(OverlappingActors);
-	
-	for (AActor* OverlappingActor : OverlappingActors)
+	OverlapComp->GetOverlappingActors(OverlappingActors,ARatasCharacterPlayer::StaticClass());
+
+	if (!OverlappingActors.IsEmpty())
 	{
-		if (OverlappingActor->IsA(ARatasCharacterPlayer::StaticClass()))
-		{
-			UE_LOGFMT(LogTemp, Log,"te vi weon");
-			LookAt(OverlappingActor->GetActorLocation());
-			return true;
-		}
+		LookAt(OverlappingActors[0]->GetActorLocation());
+		return true;
 	}
-	
 	return false;
 }

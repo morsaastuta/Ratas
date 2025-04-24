@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Ratas/RatasCharacter.h"
 #include "RatasBullet.generated.h"
 
 class USphereComponent;
+class UStaticMeshComponent;
+class UProjectileMovementComponent;
 
 UCLASS()
 class RATAS_API ARatasBullet : public AActor
@@ -18,6 +19,12 @@ public:
 
 	UPROPERTY(Category=Weapon, EditAnywhere)
 	USphereComponent* CollisionSphere;
+
+	UPROPERTY(Category=Weapon, EditAnywhere)
+	UStaticMeshComponent* Mesh;
+	
+	UPROPERTY(Category=Weapon, BlueprintReadWrite,EditAnywhere)
+	UProjectileMovementComponent* ProjectileMovement;
 	
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	int Damage;
@@ -32,7 +39,7 @@ public:
 	float DespawnTimer;
 
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	TSubclassOf<ARatasCharacter> Source;
+	FName TargetTag;
 
 	ARatasBullet();
 	

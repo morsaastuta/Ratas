@@ -2,15 +2,23 @@
 
 
 
-#include "Logging/StructuredLog.h"
-#include "Ratas/RatasCharacter.h"
+
 #include "Props/RatasBullet.h"
+#include "Ratas/RatasCharacter.h"
 #include "Components/SphereComponent.h"
+#include "GameFramework/ProjectileMovementComponent.h"
 
 ARatasBullet::ARatasBullet()
 {
 	CollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("SphereColliderCoso"));
+	CollisionSphere->SetupAttachment(RootComponent);
 	CollisionSphere->OnComponentBeginOverlap.AddDynamic(this, &ARatasBullet::OnBeginOverlap);
+
+		
+	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
+	Mesh->SetupAttachment(CollisionSphere);
+
+	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 }
 
 /*
@@ -23,8 +31,9 @@ ARatasBullet::ARatasBullet(const int _Damage, const float _Speed, const bool _Pr
 
 void ARatasBullet::OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor->GetClass()->GetSuperClass()->GetSuperClass() == ARatasCharacter::StaticClass() && OtherActor->GetClass()->GetSuperClass() != Source)
+	if (OtherComp->ComponentHasTag(TargetTag))
 	{
-		UE_LOGFMT(LogTemplateCharacter, Log,"Me disyte weonm");
+		Cast<ARatasCharacter>(OtherActor)->GetHit(Damage);
+		Destroy();
 	}
 }
