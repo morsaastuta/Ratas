@@ -6,7 +6,6 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Logging/StructuredLog.h"
 
-
 // Sets default values
 ARatasCharacterPlayer::ARatasCharacterPlayer()
 {

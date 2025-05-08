@@ -85,9 +85,7 @@ void ARatasCharacter::Act()
 
 void ARatasCharacter::ChangeHealth(const int Value)
 {
-	if (Value < 0) printf("Dao");
-	else if (Value > 0) printf("Cure" + Value);
-	else printf("?????????????" + Value);
+	UE_LOGFMT(LogTemp, Log, "{Total} + {Value} = {Result}", ("Value" , Value), ("Total", Health), ("Result", Health + Value));
 	
 	Health = FMath::Clamp(Health + Value, 0, HealthMax);
 	
@@ -97,17 +95,17 @@ void ARatasCharacter::ChangeHealth(const int Value)
 	}
 }
 
-void ARatasCharacter::GetHit(const int Value)
+void ARatasCharacter::GetHit(const int Damage)
 {
 	if (HitCooldown >= HitCooldownMax)
 	{
 		UE_LOGFMT(LogTemplateCharacter, Log,"Me disyte weonm");
 		HitCooldown = 0;
-		ChangeHealth(Value);
+		ChangeHealth(-Damage);
 	}
 }
 
 void ARatasCharacter::Die()
 {
-	printf("DIE");
+
 }

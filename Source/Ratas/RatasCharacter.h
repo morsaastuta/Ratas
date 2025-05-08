@@ -72,13 +72,13 @@ protected:
 	virtual void Look(const FVector& Value);
 	
 	virtual void Act();
-
+	
 	virtual void ChangeHealth(int Value);
 	
 	virtual void Die();
 
 public:
-	virtual void GetHit(const int Value);
+	virtual void GetHit(const int Damage);
 
 };
 

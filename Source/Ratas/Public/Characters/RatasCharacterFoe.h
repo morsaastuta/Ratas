@@ -17,7 +17,6 @@ class RATAS_API ARatasCharacterFoe : public ARatasCharacter
 {
 	GENERATED_BODY()
 
-
 	//Functions
 public:
 	ARatasCharacterFoe();
@@ -39,5 +38,9 @@ protected:
 	bool DetectPlayer();
 
 	void LookAt(FVector Location);
-	
+
+	virtual void ChangeHealth(int Value) override;
+
+	UFUNCTION(BlueprintNativeEvent, Category="Ratas")
+	void AfterChecks();
 };

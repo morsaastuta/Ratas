@@ -7,6 +7,7 @@
 #include "Ratas/RatasCharacter.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Logging/StructuredLog.h"
 
 ARatasBullet::ARatasBullet()
 {
@@ -31,8 +32,13 @@ ARatasBullet::ARatasBullet(const int _Damage, const float _Speed, const bool _Pr
 
 void ARatasBullet::OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	UE_LOGFMT(LogTemplateCharacter, Log,"{tag}", ("tag", TargetTag));
+	UE_LOGFMT(LogTemplateCharacter, Log,"{tag}", ("tag", OtherComp->ComponentTags));
+
 	if (OtherComp->ComponentHasTag(TargetTag))
 	{
+		UE_LOGFMT(LogTemplateCharacter, Log,"Hago 2");
+
 		Cast<ARatasCharacter>(OtherActor)->GetHit(Damage);
 		Destroy();
 	}

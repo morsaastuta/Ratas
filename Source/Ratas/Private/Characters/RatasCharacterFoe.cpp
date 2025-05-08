@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Characters/RatasCharacterFoe.h"
 #include "Chaos/Utilities.h"
 #include "Characters/RatasCharacterPlayer.h"
@@ -10,6 +9,7 @@ ARatasCharacterFoe::ARatasCharacterFoe(): OverlapRange(0)
 {
 	OverlapComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereOverlap"));
 	OverlapComp->SetupAttachment(RootComponent);
+	OverlapComp->SetSphereRadius(OverlapRange);
 }
 
 void ARatasCharacterFoe::LookAt(FVector Location)
@@ -35,4 +35,15 @@ bool ARatasCharacterFoe::DetectPlayer()
 		return true;
 	}
 	return false;
+}
+
+void ARatasCharacterFoe::ChangeHealth(int Value)
+{
+	Super::ChangeHealth(Value);
+
+	AfterChecks();
+}
+
+void ARatasCharacterFoe::AfterChecks_Implementation()
+{
 }
