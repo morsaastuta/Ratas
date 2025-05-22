@@ -1,10 +1,10 @@
 #include "Characters/RatasCharacterPlayer.h"
 #include "EnhancedInputComponent.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/ArrowComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SceneCaptureComponent2D.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Logging/StructuredLog.h"
 
 // Sets default values
 ARatasCharacterPlayer::ARatasCharacterPlayer()
@@ -19,10 +19,12 @@ ARatasCharacterPlayer::ARatasCharacterPlayer()
 	GetMesh()->SetupAttachment(Camera);
 
 	// Eyes
+	Eyes = CreateDefaultSubobject<UArrowComponent>(TEXT("Eyes"));
+	Eyes->SetupAttachment(GetCapsuleComponent());
 	EyeLeft = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("EyeLeft"));
 	EyeRight = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("EyeRight"));
-	EyeLeft->SetupAttachment(GetCapsuleComponent());
-	EyeRight->SetupAttachment(GetCapsuleComponent());
+	EyeLeft->SetupAttachment(Camera);
+	EyeRight->SetupAttachment(Camera);
 	EyeLeft->SetRelativeLocation(FVector(-10.f, 0.f, 60.f));
 	EyeRight->SetRelativeLocation(FVector(-10.f, 0.f, 60.f));
 	// Eye blend
@@ -42,22 +44,34 @@ ARatasCharacterPlayer::ARatasCharacterPlayer()
 void ARatasCharacterPlayer::BeginPlay()
 {
 	Super::BeginPlay();
+	// Eye blend
+	if (IsValid(WidgetReference))
+	{
+		EyeBlend = CreateWidget(GetWorld(), WidgetReference);
+	}
+	
+	if (IsValid(EyeBlend))
+	{
+		EyeBlend->AddToViewport();
+	}
+
 	
 }
 
 void ARatasCharacterPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	Acceleration = IsMoving ? FMath::Clamp(Acceleration + 0.01f, 1.f, 4.f) : FMath::Clamp(Acceleration - 0.02f, 1.f, 4.f);
-
+	
+	Acceleration = IsMoving ? FMath::Clamp(Acceleration + 0.01f, 0.f, 4.f) : FMath::Clamp(Acceleration - 0.02f, 0.f, 4.f);
+	
 	GetCharacterMovement()->MaxAcceleration = Acceleration * 200.f;
 
-	
+	float factor = 160;
+	EyeLeft->SetRelativeRotation(FRotator(EyeLeft->GetRelativeRotation().Pitch,-Acceleration*(factor/2)/4,EyeLeft->GetRelativeRotation().Roll));
+	EyeRight->SetRelativeRotation(FRotator(EyeRight->GetRelativeRotation().Pitch,Acceleration*(factor/2)/4,EyeRight->GetRelativeRotation().Roll));
+	EyeLeft->FOVAngle = Acceleration*factor/4;
+	EyeRight->FOVAngle = Acceleration*factor/4;
 	//UE_LOGFMT(LogTemplateCharacter, Log, "{Value}", ("Value" , Acceleration));
-
-
-	
 }
 
 void ARatasCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -96,6 +110,8 @@ void ARatasCharacterPlayer::LookInput(const FInputActionValue& Value)
 	//printf("LUKIN");
 
 	Look(Value.Get<FVector3d>());
+
+	Eyes->SetRelativeRotation(FRotator(Camera->GetRelativeRotation().Pitch, Eyes->GetRelativeRotation().Yaw, Eyes->GetRelativeRotation().Roll));
 }
 
 void ARatasCharacterPlayer::ActInput(const FInputActionValue& Value)
