@@ -19,12 +19,10 @@ ARatasCharacterPlayer::ARatasCharacterPlayer()
 	GetMesh()->SetupAttachment(Camera);
 
 	// Eyes
-	Eyes = CreateDefaultSubobject<UArrowComponent>(TEXT("Eyes"));
-	Eyes->SetupAttachment(GetCapsuleComponent());
 	EyeLeft = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("EyeLeft"));
 	EyeRight = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("EyeRight"));
-	EyeLeft->SetupAttachment(Camera);
-	EyeRight->SetupAttachment(Camera);
+	EyeLeft->SetupAttachment(GetCapsuleComponent());
+	EyeRight->SetupAttachment(GetCapsuleComponent());
 	EyeLeft->SetRelativeLocation(FVector(-10.f, 0.f, 60.f));
 	EyeRight->SetRelativeLocation(FVector(-10.f, 0.f, 60.f));
 	// Eye blend
@@ -111,7 +109,7 @@ void ARatasCharacterPlayer::LookInput(const FInputActionValue& Value)
 
 	Look(Value.Get<FVector3d>());
 
-	Eyes->SetRelativeRotation(FRotator(Camera->GetRelativeRotation().Pitch, Eyes->GetRelativeRotation().Yaw, Eyes->GetRelativeRotation().Roll));
+	//Eyes->SetRelativeRotation(FRotator(Camera->GetRelativeRotation().Pitch, Eyes->GetRelativeRotation().Yaw, Eyes->GetRelativeRotation().Roll));
 }
 
 void ARatasCharacterPlayer::ActInput(const FInputActionValue& Value)
