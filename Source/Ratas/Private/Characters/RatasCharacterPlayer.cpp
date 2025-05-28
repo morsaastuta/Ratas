@@ -52,23 +52,28 @@ void ARatasCharacterPlayer::BeginPlay()
 	{
 		EyeBlend->AddToViewport();
 	}
-
-	
 }
 
 void ARatasCharacterPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	
-	Acceleration = IsMoving ? FMath::Clamp(Acceleration + 0.01f, 0.f, 4.f) : FMath::Clamp(Acceleration - 0.02f, 0.f, 4.f);
-	
-	GetCharacterMovement()->MaxAcceleration = Acceleration * 200.f;
 
-	float factor = 160;
-	EyeLeft->SetRelativeRotation(FRotator(EyeLeft->GetRelativeRotation().Pitch,-Acceleration*(factor/2)/4,EyeLeft->GetRelativeRotation().Roll));
-	EyeRight->SetRelativeRotation(FRotator(EyeRight->GetRelativeRotation().Pitch,Acceleration*(factor/2)/4,EyeRight->GetRelativeRotation().Roll));
-	EyeLeft->FOVAngle = Acceleration*factor/4;
-	EyeRight->FOVAngle = Acceleration*factor/4;
+	if (HasEverMoved)
+	{
+		Acceleration = GetCharacterMovement()->GetLastUpdateVelocity() != FVector(0,0,0) ? FMath::Clamp(Acceleration + 0.01f, 0.f, 4.f) : FMath::Clamp(Acceleration - 0.02f, 0.f, 4.f);
+		if (Immortal && Acceleration <= 0)
+		{
+			Acceleration = 0.1f;
+		}
+		
+		GetCharacterMovement()->MaxAcceleration = Acceleration * 200.f;
+
+		float FOVFactorMax = 160;
+		EyeLeft->SetRelativeRotation(FRotator(EyeLeft->GetRelativeRotation().Pitch,-Acceleration*(FOVFactorMax/2)/4,EyeLeft->GetRelativeRotation().Roll));
+		EyeRight->SetRelativeRotation(FRotator(EyeRight->GetRelativeRotation().Pitch,Acceleration*(FOVFactorMax/2)/4,EyeRight->GetRelativeRotation().Roll));
+		EyeLeft->FOVAngle = Acceleration*FOVFactorMax/4;
+		EyeRight->FOVAngle = Acceleration*FOVFactorMax/4;
+	}
 	//UE_LOGFMT(LogTemplateCharacter, Log, "{Value}", ("Value" , Acceleration));
 }
 
@@ -97,16 +102,14 @@ void ARatasCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInp
 void ARatasCharacterPlayer::MoveInput(const FInputActionValue& Value)
 {
 	//UE_LOGFMT(LogTemplateCharacter, Log, "Hello {Value} World", ("Value" , Value.ToString()));
-
-	IsMoving = true;
 	
 	Move(Value.Get<FVector3d>());
+
+	HasEverMoved = true;
 }
 
 void ARatasCharacterPlayer::LookInput(const FInputActionValue& Value)
 {
-	//printf("LUKIN");
-
 	Look(Value.Get<FVector3d>());
 
 	//Eyes->SetRelativeRotation(FRotator(Camera->GetRelativeRotation().Pitch, Eyes->GetRelativeRotation().Yaw, Eyes->GetRelativeRotation().Roll));
@@ -114,8 +117,6 @@ void ARatasCharacterPlayer::LookInput(const FInputActionValue& Value)
 
 void ARatasCharacterPlayer::ActInput(const FInputActionValue& Value)
 {
-	//printf("ACTIN");
-
 	if (Value.Get<bool>()) Act();
 }
 
@@ -126,3 +127,17 @@ void ARatasCharacterPlayer::StopInput(const FInputActionValue& _)
 	IsMoving = false;
 }
 
+void ARatasCharacterPlayer::GetHit(const int Damage)
+{
+	Acceleration -= Damage;
+
+	if (Acceleration <= 0)
+	{
+		Die();
+	}
+}
+
+void ARatasCharacterPlayer::Die()
+{
+	
+}

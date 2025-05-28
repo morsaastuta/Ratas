@@ -24,10 +24,16 @@ public:
 protected:
 
 	UPROPERTY(Category=Detector, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	float OverlapRange;
+	float OverlapRangeDetect;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	USphereComponent* OverlapComp;
+	USphereComponent* OverlapCompDetect;
+	
+	UPROPERTY(Category=Detector, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	float OverlapRangeAttack;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	USphereComponent* OverlapCompAttack;
 
 	virtual void BeginPlay() override;
 
@@ -36,6 +42,9 @@ protected:
 	
 	UFUNCTION(BlueprintCallable, Category="Ratas")
 	bool DetectPlayer();
+
+	UFUNCTION(BlueprintCallable, Category="Ratas")
+	bool AttackPlayer();
 
 	void LookAt(FVector Location);
 

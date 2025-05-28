@@ -104,8 +104,8 @@ void ARatasCharacter::GetHit(const int Damage)
 		ChangeHealth(-Damage);
 	}
 }
-
 void ARatasCharacter::Die()
 {
-
+	
 }
+

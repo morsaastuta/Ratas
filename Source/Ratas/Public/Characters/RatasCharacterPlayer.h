@@ -18,6 +18,11 @@ public:
 
 	//Variables
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	bool Immortal = false;
+	
+	bool HasEverMoved = false;
+	
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	UCameraComponent* Camera;
 
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
@@ -44,6 +49,8 @@ public:
 
 protected:
 	
+	virtual void Die() override;
+	
 	virtual void BeginPlay() override;
 	
 	void MoveInput(const FInputActionValue& Value);
@@ -51,5 +58,8 @@ protected:
 	void ActInput(const FInputActionValue& Value);
 	void StopInput(const FInputActionValue& _);
 
+public:
+	
+	virtual void GetHit(const int Damage) override;
 	
 };

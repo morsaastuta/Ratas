@@ -1,10 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Weapons/RatasWeapon.h"
 #include "Ratas/Public/Characters/RatasCharacterPlayer.h"
 #include "Logging/StructuredLog.h"
-
 
 // Sets default values
 ARatasWeapon::ARatasWeapon(): Damage(0), Delay(0)

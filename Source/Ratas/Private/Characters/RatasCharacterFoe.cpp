@@ -5,11 +5,15 @@
 #include "Characters/RatasCharacterPlayer.h"
 #include "Logging/StructuredLog.h"
 
-ARatasCharacterFoe::ARatasCharacterFoe(): OverlapRange(0)
+ARatasCharacterFoe::ARatasCharacterFoe(): OverlapRangeDetect(0), OverlapRangeAttack(0)
 {
-	OverlapComp = CreateDefaultSubobject<USphereComponent>(TEXT("SphereOverlap"));
-	OverlapComp->SetupAttachment(RootComponent);
-	OverlapComp->SetSphereRadius(OverlapRange);
+	OverlapCompDetect = CreateDefaultSubobject<USphereComponent>(TEXT("SphereOverlapDetect"));
+	OverlapCompDetect->SetupAttachment(RootComponent);
+	OverlapCompDetect->SetSphereRadius(OverlapRangeDetect);
+
+	OverlapCompAttack = CreateDefaultSubobject<USphereComponent>(TEXT("SphereOverlapAttack"));
+	OverlapCompAttack->SetupAttachment(RootComponent);
+	OverlapCompAttack->SetSphereRadius(OverlapRangeAttack);
 }
 
 void ARatasCharacterFoe::LookAt(FVector Location)
@@ -20,18 +24,32 @@ void ARatasCharacterFoe::LookAt(FVector Location)
 void ARatasCharacterFoe::BeginPlay() 
 {
 	Super::BeginPlay();
-	OverlapComp->SetSphereRadius(OverlapRange);
+	OverlapCompDetect->SetSphereRadius(OverlapRangeDetect);
+	OverlapCompAttack->SetSphereRadius(OverlapRangeAttack);
 }
 
 bool ARatasCharacterFoe::DetectPlayer()
 {
 	TArray<AActor*> OverlappingActors;
 	
-	OverlapComp->GetOverlappingActors(OverlappingActors,ARatasCharacterPlayer::StaticClass());
+	OverlapCompDetect->GetOverlappingActors(OverlappingActors,ARatasCharacterPlayer::StaticClass());
 
 	if (!OverlappingActors.IsEmpty())
 	{
 		LookAt(OverlappingActors[0]->GetActorLocation());
+		return true;
+	}
+	return false;
+}
+
+bool ARatasCharacterFoe::AttackPlayer()
+{
+	TArray<AActor*> OverlappingActors;
+	
+	OverlapCompAttack->GetOverlappingActors(OverlappingActors,ARatasCharacterPlayer::StaticClass());
+
+	if (!OverlappingActors.IsEmpty())
+	{
 		return true;
 	}
 	return false;
