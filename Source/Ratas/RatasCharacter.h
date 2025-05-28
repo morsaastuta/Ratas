@@ -78,7 +78,8 @@ protected:
 	virtual void Die();
 
 public:
-	virtual void GetHit(const int Damage);
+		
+		virtual void GetHit(const int Damage);
 
 };
 

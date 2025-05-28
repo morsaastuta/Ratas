@@ -21,6 +21,8 @@ class RATAS_API ARatasCharacterFoe : public ARatasCharacter
 public:
 	ARatasCharacterFoe();
 	
+	UFUNCTION(BlueprintCallable, Category="Ratas")
+	void LookAt(FVector Location);
 protected:
 
 	UPROPERTY(Category=Detector, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
@@ -39,14 +41,11 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	FVector TargetLocation;
+
+	UFUNCTION(BlueprintCallable, Category="Ratas")
+	bool CheckPlayer(UShapeComponent* Overlap, ARatasCharacterPlayer*& Player);
 	
-	UFUNCTION(BlueprintCallable, Category="Ratas")
-	bool DetectPlayer();
-
-	UFUNCTION(BlueprintCallable, Category="Ratas")
-	bool AttackPlayer();
-
-	void LookAt(FVector Location);
+	
 
 	virtual void ChangeHealth(int Value) override;
 

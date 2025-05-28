@@ -28,28 +28,15 @@ void ARatasCharacterFoe::BeginPlay()
 	OverlapCompAttack->SetSphereRadius(OverlapRangeAttack);
 }
 
-bool ARatasCharacterFoe::DetectPlayer()
+bool ARatasCharacterFoe::CheckPlayer(UShapeComponent* Overlap, ARatasCharacterPlayer*& Player)
 {
 	TArray<AActor*> OverlappingActors;
 	
-	OverlapCompDetect->GetOverlappingActors(OverlappingActors,ARatasCharacterPlayer::StaticClass());
+	Overlap->GetOverlappingActors(OverlappingActors,ARatasCharacterPlayer::StaticClass());
 
 	if (!OverlappingActors.IsEmpty())
 	{
-		LookAt(OverlappingActors[0]->GetActorLocation());
-		return true;
-	}
-	return false;
-}
-
-bool ARatasCharacterFoe::AttackPlayer()
-{
-	TArray<AActor*> OverlappingActors;
-	
-	OverlapCompAttack->GetOverlappingActors(OverlappingActors,ARatasCharacterPlayer::StaticClass());
-
-	if (!OverlappingActors.IsEmpty())
-	{
+		Player = Cast<ARatasCharacterPlayer>(OverlappingActors[0]);
 		return true;
 	}
 	return false;

@@ -60,6 +60,7 @@ protected:
 
 public:
 	
-	virtual void GetHit(const int Damage) override;
+		UFUNCTION(BlueprintCallable, Category="Ratas")
+		virtual void GetHit(const int Damage) override;
 	
 };
