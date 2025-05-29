@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Characters/RatasCharacterFoe.h"
+#include "Wave.h"
 #include "Chaos/Utilities.h"
 #include "Characters/RatasCharacterPlayer.h"
 #include "Logging/StructuredLog.h"
@@ -47,6 +48,14 @@ void ARatasCharacterFoe::ChangeHealth(int Value)
 	Super::ChangeHealth(Value);
 
 	AfterChecks();
+}
+
+void ARatasCharacterFoe::Die()
+{
+	if (AssignedWave != nullptr)
+	{
+		AssignedWave->CurrentDeaths++;
+	}
 }
 
 void ARatasCharacterFoe::AfterChecks_Implementation()

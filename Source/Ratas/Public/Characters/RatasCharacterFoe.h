@@ -11,6 +11,7 @@
  * 
  */
 class USphereComponent;
+class AWave;
 
 UCLASS()
 class RATAS_API ARatasCharacterFoe : public ARatasCharacter
@@ -23,6 +24,10 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category="Ratas")
 	void LookAt(FVector Location);
+
+	UPROPERTY(Category=Detector, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	AWave* AssignedWave;
+	
 protected:
 
 	UPROPERTY(Category=Detector, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
@@ -45,7 +50,7 @@ protected:
 	UFUNCTION(BlueprintCallable, Category="Ratas")
 	bool CheckPlayer(UShapeComponent* Overlap, ARatasCharacterPlayer*& Player);
 	
-	
+	virtual void Die() override;
 
 	virtual void ChangeHealth(int Value) override;
 
