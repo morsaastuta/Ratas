@@ -18,7 +18,7 @@ class RATAS_API ARatasBullet : public AActor
 public:
 
 	UPROPERTY(Category=Weapon, EditAnywhere)
-	USphereComponent* CollisionSphere;
+	USphereComponent* Collider;
 
 	UPROPERTY(Category=Weapon, EditAnywhere)
 	UStaticMeshComponent* Mesh;
@@ -27,13 +27,10 @@ public:
 	UProjectileMovementComponent* ProjectileMovement;
 	
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	int Damage;
+	float Damage;
 
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	float Speed;
-
-	UPROPERTY(Category=Weapon, EditAnywhere,BlueprintReadWrite , meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	bool ProximityDamage;
 
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	float DespawnTimer;

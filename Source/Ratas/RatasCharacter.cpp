@@ -78,11 +78,6 @@ void ARatasCharacter::Look(const FVector& Value)
 	AddControllerPitchInput(Value.Y);
 }
 
-void ARatasCharacter::Act()
-{
-	
-}
-
 void ARatasCharacter::ChangeHealth(const int Value)
 {
 	UE_LOGFMT(LogTemp, Log, "{Total} + {Value} = {Result}", ("Value" , Value), ("Total", Health), ("Result", Health + Value));

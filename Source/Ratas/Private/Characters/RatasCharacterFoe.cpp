@@ -8,13 +8,13 @@
 
 ARatasCharacterFoe::ARatasCharacterFoe(): OverlapRangeDetect(0), OverlapRangeAttack(0)
 {
-	OverlapCompDetect = CreateDefaultSubobject<USphereComponent>(TEXT("SphereOverlapDetect"));
-	OverlapCompDetect->SetupAttachment(RootComponent);
-	OverlapCompDetect->SetSphereRadius(OverlapRangeDetect);
+	DetectionRange = CreateDefaultSubobject<USphereComponent>(TEXT("DetectionRange"));
+	DetectionRange->SetupAttachment(RootComponent);
+	DetectionRange->SetSphereRadius(OverlapRangeDetect);
 
-	OverlapCompAttack = CreateDefaultSubobject<USphereComponent>(TEXT("SphereOverlapAttack"));
-	OverlapCompAttack->SetupAttachment(RootComponent);
-	OverlapCompAttack->SetSphereRadius(OverlapRangeAttack);
+	EngageRange = CreateDefaultSubobject<USphereComponent>(TEXT("EngageRange"));
+	EngageRange->SetupAttachment(RootComponent);
+	EngageRange->SetSphereRadius(OverlapRangeAttack);
 }
 
 void ARatasCharacterFoe::LookAt(FVector Location)
@@ -25,8 +25,8 @@ void ARatasCharacterFoe::LookAt(FVector Location)
 void ARatasCharacterFoe::BeginPlay() 
 {
 	Super::BeginPlay();
-	OverlapCompDetect->SetSphereRadius(OverlapRangeDetect);
-	OverlapCompAttack->SetSphereRadius(OverlapRangeAttack);
+	DetectionRange->SetSphereRadius(OverlapRangeDetect);
+	EngageRange->SetSphereRadius(OverlapRangeAttack);
 }
 
 bool ARatasCharacterFoe::CheckPlayer(UShapeComponent* Overlap, ARatasCharacterPlayer*& Player)
@@ -54,7 +54,7 @@ void ARatasCharacterFoe::Die()
 {
 	if (AssignedWave != nullptr)
 	{
-		AssignedWave->CurrentDeaths++;
+		AssignedWave->Deaths++;
 	}
 }
 

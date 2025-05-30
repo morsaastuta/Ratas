@@ -7,9 +7,7 @@
 #include "RatasWeaponRanged.generated.h"
 
 class ARatasBullet;
-/**
- * 
- */
+
 UCLASS()
 class RATAS_API ARatasWeaponRanged : public ARatasWeapon
 {
@@ -21,22 +19,32 @@ public:
 	AActor* Bullet;
 
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	float Impulse;
+
+	virtual bool CheckTrigger() override;
+
+	UFUNCTION()
+	void Reload();
+
+protected:
+	
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	float ReloadTimeMax;
+
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	float ReloadTime;
 
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	float Impulse;
+	bool Reloading;
 
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	bool ProximityDamage;
+	int MagMax;
 
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	int AmmoMax;
+	int Mag;
 
-	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	int Ammo;
+	virtual void BeginPlay() override;
 
-	ARatasWeaponRanged();
-
-	ARatasBullet* Shoot();
+	virtual void Tick(float DeltaSeconds) override;
 	
 };

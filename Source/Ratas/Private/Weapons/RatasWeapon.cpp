@@ -2,27 +2,50 @@
 
 #include "Weapons/RatasWeapon.h"
 #include "Ratas/Public/Characters/RatasCharacterPlayer.h"
-#include "Logging/StructuredLog.h"
 
 // Sets default values
-ARatasWeapon::ARatasWeapon(): Damage(0), Delay(0)
+ARatasWeapon::ARatasWeapon()
 {
-	CollisionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxColliderCoso"));
-	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ARatasWeapon::OnBeginOverlap);
+	GrabArea = CreateDefaultSubobject<UBoxComponent>(TEXT("GrabArea"));
+	GrabArea->OnComponentBeginOverlap.AddDynamic(this, &ARatasWeapon::OnBeginOverlap);
 
-	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	Mesh->SetupAttachment(CollisionBox);
+	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Body"));
+	Mesh->SetupAttachment(GrabArea);
+}
+
+void ARatasWeapon::BeginPlay()
+{
+	Super::BeginPlay();
+
+	Delay = 0;
+}
+
+bool ARatasWeapon::CheckTrigger()
+{
+	if (Delay <= 0)
+	{
+		Delay = DelayMax;
+		return true;
+	}
+	return false;
 }
 
 void ARatasWeapon::OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor->GetClass()->GetSuperClass() == ARatasCharacterPlayer::StaticClass())
+	if (OtherActor->IsA(ARatasCharacterPlayer::StaticClass()))
 	{
-		CollisionBox->UnregisterComponent();
+		GrabArea->UnregisterComponent();
 		ARatasCharacterPlayer* Player = Cast<ARatasCharacterPlayer>(OtherActor);
-		Player->WeaponCurrent = this;
+		Player->AddWeapon(this);
 		AttachToComponent(Player->Camera, FAttachmentTransformRules (EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative, false));
 		Mesh->SetRelativeLocation(FVector(20.f, 20.f, -7.f));
-		UE_LOGFMT(LogTemp, Log,"Me cogiste weonm");
+	}
+}
+
+void ARatasWeapon::Tick(float DeltaSeconds)
+{
+	if (Delay > 0)
+	{
+		Delay -= DeltaSeconds;
 	}
 }

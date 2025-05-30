@@ -1,22 +1,46 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Weapons/RatasWeaponRanged.h"
 
-#include "Logging/StructuredLog.h"
-#include "Props/RatasBullet.h"
-
-ARatasWeaponRanged::ARatasWeaponRanged(): Bullet(nullptr), ReloadTime(0), Impulse(0), ProximityDamage(false),
-                                          AmmoMax(0), Ammo(0)
+void ARatasWeaponRanged::BeginPlay()
 {
-	
+	Super::BeginPlay();
+
+	Mag = MagMax;
 }
 
-ARatasBullet* ARatasWeaponRanged::Shoot()
+bool ARatasWeaponRanged::CheckTrigger()
 {
+	if (Super::CheckTrigger())
+	{
+		if (Mag > 0)
+		{
+			Mag--;
+			return true;
+		}
+		return false;
+	}
+	return false;
+}
 
-//ARatasBullet* bala = new ARatasBullet(Damage, Impulse, ProximityDamage);
+void ARatasWeaponRanged::Reload()
+{
+	Reloading = true;
+	ReloadTime = ReloadTimeMax;
+}
+
+void ARatasWeaponRanged::Tick(float DeltaSeconds)
+{
+	Super::Tick(DeltaSeconds);
+
+	if (Reloading)
+	{
+		ReloadTime -= DeltaSeconds;
 	
-	return nullptr;
-	//return new ARatasBullet(Damage, Impulse, ProximityDamage);
+		if (ReloadTime <= 0)
+		{
+			Reloading = false;
+			Mag = MagMax;
+		}
+	}
 }

@@ -34,13 +34,13 @@ protected:
 	float OverlapRangeDetect;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	USphereComponent* OverlapCompDetect;
+	USphereComponent* DetectionRange;
 	
 	UPROPERTY(Category=Detector, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	float OverlapRangeAttack;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	USphereComponent* OverlapCompAttack;
+	USphereComponent* EngageRange;
 
 	virtual void BeginPlay() override;
 

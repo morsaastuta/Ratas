@@ -1,7 +1,7 @@
 #include "Characters/RatasCharacterPlayer.h"
 #include "EnhancedInputComponent.h"
 #include "Blueprint/UserWidget.h"
-#include "Components/ArrowComponent.h"
+#include "Weapons/RatasWeaponRanged.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SceneCaptureComponent2D.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -60,19 +60,18 @@ void ARatasCharacterPlayer::Tick(float DeltaTime)
 
 	if (HasEverMoved)
 	{
-		Acceleration = GetCharacterMovement()->GetLastUpdateVelocity() != FVector(0,0,0) ? FMath::Clamp(Acceleration + 0.01f, 0.f, 4.f) : FMath::Clamp(Acceleration - 0.02f, 0.f, 4.f);
+		Acceleration = GetCharacterMovement()->GetLastUpdateVelocity() != FVector(0,0,0) ? FMath::Clamp(Acceleration + 0.01f, 0.f, AccelerationMax) : FMath::Clamp(Acceleration - 0.01f, 0.f, AccelerationMax);
 		if (Immortal && Acceleration <= 0)
 		{
-			Acceleration = 0.1f;
+			Acceleration = AccelerationMin;
 		}
 		
 		GetCharacterMovement()->MaxAcceleration = Acceleration * 200.f;
 
-		float FOVFactorMax = 160;
-		EyeLeft->SetRelativeRotation(FRotator(EyeLeft->GetRelativeRotation().Pitch,-Acceleration*(FOVFactorMax/2)/4,EyeLeft->GetRelativeRotation().Roll));
-		EyeRight->SetRelativeRotation(FRotator(EyeRight->GetRelativeRotation().Pitch,Acceleration*(FOVFactorMax/2)/4,EyeRight->GetRelativeRotation().Roll));
-		EyeLeft->FOVAngle = Acceleration*FOVFactorMax/4;
-		EyeRight->FOVAngle = Acceleration*FOVFactorMax/4;
+		EyeLeft->SetRelativeRotation(FRotator(EyeLeft->GetRelativeRotation().Pitch,-Acceleration*(FOVAngleMax/2)/AccelerationMax,EyeLeft->GetRelativeRotation().Roll));
+		EyeRight->SetRelativeRotation(FRotator(EyeRight->GetRelativeRotation().Pitch,Acceleration*(FOVAngleMax/2)/AccelerationMax,EyeRight->GetRelativeRotation().Roll));
+		EyeLeft->FOVAngle = Acceleration*FOVAngleMax/AccelerationMax;
+		EyeRight->FOVAngle = Acceleration*FOVAngleMax/AccelerationMax;
 	}
 	//UE_LOGFMT(LogTemplateCharacter, Log, "{Value}", ("Value" , Acceleration));
 }
@@ -91,7 +90,16 @@ void ARatasCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInp
 
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ARatasCharacterPlayer::LookInput);
 		
-		EnhancedInputComponent->BindAction(ActAction, ETriggerEvent::Triggered, this, &ARatasCharacterPlayer::ActInput);
+		EnhancedInputComponent->BindAction(TriggerAction, ETriggerEvent::Triggered, this, &ARatasCharacterPlayer::TriggerInput);
+		
+		EnhancedInputComponent->BindAction(ReloadAction, ETriggerEvent::Triggered, this, &ARatasCharacterPlayer::ReloadInput);
+
+		EnhancedInputComponent->BindAction(NextWeaponAction, ETriggerEvent::Started, this, &ARatasCharacterPlayer::NextWeaponInput);
+		EnhancedInputComponent->BindAction(PrevWeaponAction, ETriggerEvent::Started, this, &ARatasCharacterPlayer::PrevWeaponInput);
+		EnhancedInputComponent->BindAction(SelectWeaponAction1, ETriggerEvent::Started, this, &ARatasCharacterPlayer::SelectWeaponInput1);
+		EnhancedInputComponent->BindAction(SelectWeaponAction2, ETriggerEvent::Started, this, &ARatasCharacterPlayer::SelectWeaponInput2);
+		EnhancedInputComponent->BindAction(SelectWeaponAction3, ETriggerEvent::Started, this, &ARatasCharacterPlayer::SelectWeaponInput3);
+		EnhancedInputComponent->BindAction(SelectWeaponAction4, ETriggerEvent::Started, this, &ARatasCharacterPlayer::SelectWeaponInput4);
 	}
 	else
 	{
@@ -100,30 +108,85 @@ void ARatasCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInp
 }
 
 void ARatasCharacterPlayer::MoveInput(const FInputActionValue& Value)
-{
-	//UE_LOGFMT(LogTemplateCharacter, Log, "Hello {Value} World", ("Value" , Value.ToString()));
-	
+{	
 	Move(Value.Get<FVector3d>());
-
 	HasEverMoved = true;
 }
 
 void ARatasCharacterPlayer::LookInput(const FInputActionValue& Value)
 {
 	Look(Value.Get<FVector3d>());
-
 	//Eyes->SetRelativeRotation(FRotator(Camera->GetRelativeRotation().Pitch, Eyes->GetRelativeRotation().Yaw, Eyes->GetRelativeRotation().Roll));
 }
 
-void ARatasCharacterPlayer::ActInput(const FInputActionValue& Value)
+void ARatasCharacterPlayer::TriggerInput()
 {
-	if (Value.Get<bool>()) Act();
+	if (WeaponCurrent->CheckTrigger()) WeaponCurrent->Trigger();
 }
 
-void ARatasCharacterPlayer::StopInput(const FInputActionValue& _)
+void ARatasCharacterPlayer::NextWeaponInput()
 {
-	
-	//UE_LOGFMT(LogTemplateCharacter, Log, "Stoppeao");
+	if (Arsenal.Num() > 0)
+	{
+		int index = Arsenal.Find(WeaponCurrent) + 1;
+		if (index >= Arsenal.Num()) index = 0;
+		SetWeapon(index);
+	}
+}
+
+void ARatasCharacterPlayer::PrevWeaponInput()
+{
+	if (Arsenal.Num() > 0)
+	{
+		int index = Arsenal.Find(WeaponCurrent) - 1;
+		if (index < 0) index = Arsenal.Num() - 1;
+		SetWeapon(index);
+	}
+}
+
+void ARatasCharacterPlayer::SelectWeaponInput1()
+{
+	if (Arsenal.Num() >= 1) SetWeapon(0);
+}
+
+void ARatasCharacterPlayer::SelectWeaponInput2()
+{
+	if (Arsenal.Num() >= 2) SetWeapon(1);
+}
+
+void ARatasCharacterPlayer::SelectWeaponInput3()
+{
+	if (Arsenal.Num() >= 3) SetWeapon(2);
+}
+
+void ARatasCharacterPlayer::SelectWeaponInput4()
+{
+	if (Arsenal.Num() >= 4) SetWeapon(3);
+}
+
+void ARatasCharacterPlayer::AddWeapon(ARatasWeapon* Weapon)
+{
+	Arsenal.Add(Weapon);
+	SetWeapon(Arsenal.Num() - 1);
+}
+
+void ARatasCharacterPlayer::SetWeapon(int index)
+{
+	WeaponCurrent->Mesh->SetActive(false);
+	WeaponCurrent = Arsenal[index];
+	WeaponCurrent->Mesh->SetActive(true);
+}
+
+void ARatasCharacterPlayer::ReloadInput()
+{
+	if (WeaponCurrent != nullptr && WeaponCurrent->IsA(ARatasWeaponRanged::StaticClass()))
+	{
+		Cast<ARatasWeaponRanged>(WeaponCurrent)->Reload();
+	}
+}
+
+void ARatasCharacterPlayer::StopInput()
+{
 	IsMoving = false;
 }
 
