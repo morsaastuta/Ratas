@@ -14,13 +14,19 @@ class RATAS_API ARatasWeapon : public AActor
 	
 public:
 
-	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
-	TObjectPtr<USkeletalMeshComponent> Mesh;
+	ARatasWeapon();
+
+	UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
+	UBoxComponent* Bounds;
 		
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
 	float Damage;
+	
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	float RechargeTimeMax;
 
-	ARatasWeapon();
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	float RechargeTime;
 
 	UFUNCTION()
 	virtual bool CheckTrigger();
@@ -29,9 +35,6 @@ public:
 	void Trigger();
 
 protected:
-
-	UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
-	UBoxComponent* GrabArea;
 
 	UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
 	float DelayMax;

@@ -20,7 +20,17 @@ public:
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	bool Immortal = false;
 	
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	bool HasEverMoved = false;
+	
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	float FOVAngleMax = 160;
+	
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	float AccelerationMin = 0.1f;
+	
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	float AccelerationMax = 6.0f;
 	
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	UCameraComponent* Camera;
@@ -34,7 +44,7 @@ public:
 	TSubclassOf<class UUserWidget> WidgetReference;
 	
 	UPROPERTY()
-	UUserWidget* EyeBlend;
+	UUserWidget* Viewport;
 	
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	ARatasWeapon* WeaponCurrent;
@@ -54,11 +64,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category="Ratas")
 	virtual void GetHit(const int Damage) override;
 
-protected:
+	UFUNCTION(BlueprintImplementableEvent, Category = "RatasCallback")
+	void CallbackChangeWeapon();
 
-	float FOVAngleMax = 160;
-	float AccelerationMin = 0.1f;
-	float AccelerationMax = 6.0f;
+protected:
 	
 	virtual void Die() override;
 	virtual void BeginPlay() override;

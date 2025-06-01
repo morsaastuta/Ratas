@@ -14,6 +14,11 @@ class RATAS_API ARatasWeaponRanged : public ARatasWeapon
 	GENERATED_BODY()
 	
 public:
+
+	ARatasWeaponRanged();
+
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+	TObjectPtr<USkeletalMeshComponent> Mesh;
 	
 	UPROPERTY(Category=Weapon, EditAnywhere)
 	AActor* Bullet;
@@ -21,27 +26,21 @@ public:
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	float Impulse;
 
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	int MagMax;
+
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+	int Mag;
+
 	virtual bool CheckTrigger() override;
 
 	UFUNCTION()
 	void Reload();
 
 protected:
-	
-	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	float ReloadTimeMax;
-
-	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	float ReloadTime;
 
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	bool Reloading;
-
-	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	int MagMax;
-
-	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	int Mag;
 
 	virtual void BeginPlay() override;
 

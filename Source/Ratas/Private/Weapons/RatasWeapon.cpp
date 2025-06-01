@@ -6,11 +6,8 @@
 // Sets default values
 ARatasWeapon::ARatasWeapon()
 {
-	GrabArea = CreateDefaultSubobject<UBoxComponent>(TEXT("GrabArea"));
-	GrabArea->OnComponentBeginOverlap.AddDynamic(this, &ARatasWeapon::OnBeginOverlap);
-
-	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Body"));
-	Mesh->SetupAttachment(GrabArea);
+	Bounds = CreateDefaultSubobject<UBoxComponent>(TEXT("Bounds"));
+	Bounds->OnComponentBeginOverlap.AddDynamic(this, &ARatasWeapon::OnBeginOverlap);
 }
 
 void ARatasWeapon::BeginPlay()
@@ -34,11 +31,11 @@ void ARatasWeapon::OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor*
 {
 	if (OtherActor->IsA(ARatasCharacterPlayer::StaticClass()))
 	{
-		GrabArea->UnregisterComponent();
+		Bounds->UnregisterComponent();
 		ARatasCharacterPlayer* Player = Cast<ARatasCharacterPlayer>(OtherActor);
 		Player->AddWeapon(this);
 		AttachToComponent(Player->Camera, FAttachmentTransformRules (EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative, false));
-		Mesh->SetRelativeLocation(FVector(20.f, 20.f, -7.f));
+		Bounds->SetRelativeLocation(FVector(20.f, 20.f, -7.f));
 	}
 }
 

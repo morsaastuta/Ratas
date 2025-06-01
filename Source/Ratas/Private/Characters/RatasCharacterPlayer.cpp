@@ -28,12 +28,12 @@ ARatasCharacterPlayer::ARatasCharacterPlayer()
 	// Eye blend
 	if (IsValid(WidgetReference))
 	{
-		EyeBlend = CreateWidget(GetWorld(), WidgetReference);
+		Viewport = CreateWidget(GetWorld(), WidgetReference);
 	}
 	
-	if (IsValid(EyeBlend))
+	if (IsValid(Viewport))
 	{
-		EyeBlend->AddToViewport();
+		Viewport->AddToViewport();
 	}
 
 	IsMoving = false;
@@ -45,12 +45,12 @@ void ARatasCharacterPlayer::BeginPlay()
 	// Eye blend
 	if (IsValid(WidgetReference))
 	{
-		EyeBlend = CreateWidget(GetWorld(), WidgetReference);
+		Viewport = CreateWidget(GetWorld(), WidgetReference);
 	}
 	
-	if (IsValid(EyeBlend))
+	if (IsValid(Viewport))
 	{
-		EyeBlend->AddToViewport();
+		Viewport->AddToViewport();
 	}
 }
 
@@ -172,9 +172,10 @@ void ARatasCharacterPlayer::AddWeapon(ARatasWeapon* Weapon)
 
 void ARatasCharacterPlayer::SetWeapon(int index)
 {
-	WeaponCurrent->Mesh->SetActive(false);
+	WeaponCurrent->Bounds->SetActive(false);
 	WeaponCurrent = Arsenal[index];
-	WeaponCurrent->Mesh->SetActive(true);
+	WeaponCurrent->Bounds->SetActive(true);
+	CallbackChangeWeapon();
 }
 
 void ARatasCharacterPlayer::ReloadInput()
