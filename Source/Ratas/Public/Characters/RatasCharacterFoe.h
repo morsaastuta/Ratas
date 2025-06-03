@@ -34,6 +34,10 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true"))
 	float HealthMax;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Properties, meta = (AllowPrivateAccess = "true", ExposeOnSpawn = true))
+  UArrowComponent* ShootPoint;
+	
+
 	virtual void GetHit(float Damage) override;
 	
 protected:

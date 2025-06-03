@@ -3,6 +3,7 @@
 #include "Characters/RatasCharacterFoe.h"
 #include "Wave.h"
 #include "Characters/RatasCharacterPlayer.h"
+#include "Components/ArrowComponent.h"
 #include "Logging/StructuredLog.h"
 
 ARatasCharacterFoe::ARatasCharacterFoe(): OverlapRangeDetect(0), OverlapRangeAttack(0)
@@ -14,6 +15,9 @@ ARatasCharacterFoe::ARatasCharacterFoe(): OverlapRangeDetect(0), OverlapRangeAtt
 	EngageRange = CreateDefaultSubobject<USphereComponent>(TEXT("EngageRange"));
 	EngageRange->SetupAttachment(RootComponent);
 	EngageRange->SetSphereRadius(OverlapRangeAttack);
+
+	ShootPoint = CreateDefaultSubobject<UArrowComponent>(TEXT("ShootOrigin"));
+	ShootPoint->SetupAttachment(RootComponent);
 }
 
 void ARatasCharacterFoe::LookAt(FVector Location)
