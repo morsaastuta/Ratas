@@ -28,6 +28,14 @@ public:
 	UPROPERTY(Category=Detector, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	AWave* AssignedWave;
 	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true"))
+	float Health;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true"))
+	float HealthMax;
+
+	virtual void GetHit(float Damage) override;
+	
 protected:
 
 	UPROPERTY(Category=Detector, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
@@ -50,9 +58,8 @@ protected:
 	UFUNCTION(BlueprintCallable, Category="Ratas")
 	bool CheckPlayer(UShapeComponent* Overlap, ARatasCharacterPlayer*& Player);
 	
-	virtual void Die() override;
-
-	virtual void ChangeHealth(int Value) override;
+	virtual void ChangeHealth(const float Value);
+	virtual void Die();
 
 	UFUNCTION(BlueprintNativeEvent, Category="Ratas")
 	void AfterChecks();

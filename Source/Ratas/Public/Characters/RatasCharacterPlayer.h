@@ -62,14 +62,13 @@ public:
 	void AddWeapon(ARatasWeapon* Weapon);
 	
 	UFUNCTION(BlueprintCallable, Category="Ratas")
-	virtual void GetHit(const int Damage) override;
+	virtual void GetHit(const float Damage) override;
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "RatasCallback")
 	void CallbackChangeWeapon();
 
 protected:
 	
-	virtual void Die() override;
 	virtual void BeginPlay() override;
 	void SetWeapon(int index);
 	

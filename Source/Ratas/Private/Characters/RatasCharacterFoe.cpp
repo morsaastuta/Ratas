@@ -2,7 +2,6 @@
 
 #include "Characters/RatasCharacterFoe.h"
 #include "Wave.h"
-#include "Chaos/Utilities.h"
 #include "Characters/RatasCharacterPlayer.h"
 #include "Logging/StructuredLog.h"
 
@@ -43,9 +42,26 @@ bool ARatasCharacterFoe::CheckPlayer(UShapeComponent* Overlap, ARatasCharacterPl
 	return false;
 }
 
-void ARatasCharacterFoe::ChangeHealth(int Value)
+void ARatasCharacterFoe::GetHit(const float Damage)
 {
-	Super::ChangeHealth(Value);
+	if (HitCooldown >= HitCooldownMax)
+	{
+		UE_LOGFMT(LogTemplateCharacter, Log,"Me disyte weonm");
+		HitCooldown = 0;
+		ChangeHealth(-Damage);
+	}
+}
+
+void ARatasCharacterFoe::ChangeHealth(const float Value)
+{	
+	UE_LOGFMT(LogTemp, Log, "{Total} + {Value} = {Result}", ("Value" , Value), ("Total", Health), ("Result", Health + Value));
+	
+	Health = FMath::Clamp(Health + Value, 0, HealthMax);
+	
+	if (Health <= 0)
+	{
+		Die();
+	}
 
 	AfterChecks();
 }

@@ -3,10 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/ArrowComponent.h"
+#include "Props/RatasPropBullet.h"
 #include "Weapons/RatasWeapon.h"
 #include "RatasWeaponRanged.generated.h"
-
-class ARatasBullet;
 
 UCLASS()
 class RATAS_API ARatasWeaponRanged : public ARatasWeapon
@@ -19,9 +19,12 @@ public:
 
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
 	TObjectPtr<USkeletalMeshComponent> Mesh;
-	
-	UPROPERTY(Category=Weapon, EditAnywhere)
-	AActor* Bullet;
+
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+	UArrowComponent* Barrel;
+
+	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+	TSubclassOf<ARatasPropBullet> Bullet;
 
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	float Impulse;

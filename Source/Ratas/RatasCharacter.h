@@ -65,12 +65,6 @@ public:
 	UInputAction* SelectWeaponAction4;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true"))
-	int Health;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true"))
-	int HealthMax;
-	
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true"))
 	float Speed;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true"))
@@ -90,14 +84,10 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category="Ratas")
 	virtual void Look(const FVector& Value);
-	
-	virtual void ChangeHealth(int Value);
-	
-	virtual void Die();
 
 public:
 
-	virtual void GetHit(const int Damage);
+	virtual void GetHit(const float Damage);
 
 };
 

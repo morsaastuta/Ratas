@@ -14,14 +14,7 @@ DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 ARatasCharacter::ARatasCharacter()
 {
-	// Set size for collision capsule
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
-
-	Acceleration = 1.f;
-	Speed = 1.f;
-	HealthMax = 1.f;
-	Health = 1.f;
-	
 	
 	//Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
 	//Mesh1P->SetOnlyOwnerSee(true);
@@ -66,41 +59,11 @@ void ARatasCharacter::Move(const FVector& Value)
 	// Get up vector
 	const FVector DirVertical = FRotationMatrix(RotYaw).GetUnitAxis(EAxis::Z);
 	AddMovementInput(DirVertical, Vertical * Speed * Acceleration);
-	
-	
-	//UE_LOGFMT(LogTemplateCharacter, Log, "{Value}", ("Value" , GetVelocity().ToString()));
-
 }
 
 void ARatasCharacter::Look(const FVector& Value)
 {
 	AddControllerYawInput(Value.X);
 	AddControllerPitchInput(Value.Y);
-}
-
-void ARatasCharacter::ChangeHealth(const int Value)
-{
-	UE_LOGFMT(LogTemp, Log, "{Total} + {Value} = {Result}", ("Value" , Value), ("Total", Health), ("Result", Health + Value));
-	
-	Health = FMath::Clamp(Health + Value, 0, HealthMax);
-	
-	if (Health <= 0)
-	{
-		Die();
-	}
-}
-
-void ARatasCharacter::GetHit(const int Damage)
-{
-	if (HitCooldown >= HitCooldownMax)
-	{
-		UE_LOGFMT(LogTemplateCharacter, Log,"Me disyte weonm");
-		HitCooldown = 0;
-		ChangeHealth(-Damage);
-	}
-}
-void ARatasCharacter::Die()
-{
-	
 }
 
