@@ -12,34 +12,29 @@ DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 //////////////////////////////////////////////////////////////////////////
 // ARatasCharacter
 
-ARatasCharacter::ARatasCharacter()
-{
+ARatasCharacter::ARatasCharacter() {
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
-	
+
 	//Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
 	//Mesh1P->SetOnlyOwnerSee(true);
-	
+
 	//Mesh1P->bCastDynamicShadow = false;
 	//Mesh1P->CastShadow = false;
 	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
 	//Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
-
 }
 
-void ARatasCharacter::BeginPlay()
-{
+void ARatasCharacter::BeginPlay() {
 	Super::BeginPlay();
 }
 
-void ARatasCharacter::Tick(float DeltaTime)
-{
+void ARatasCharacter::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
 	if (HitCooldown <= HitCooldownMax) HitCooldown += DeltaTime;
 }
 
-void ARatasCharacter::Move(const FVector& Value)
-{
+void ARatasCharacter::Move(const FVector& Value) {
 	const float Frontal = Value.X;
 	const float Lateral = Value.Y;
 	const float Vertical = Value.Z;
@@ -47,23 +42,25 @@ void ARatasCharacter::Move(const FVector& Value)
 	// Find out which way is forward
 	const FRotator Rot = Controller->GetControlRotation();
 	const FRotator RotYaw(0, Rot.Yaw, 0);
- 
+
 	// Get forward vector
 	const FVector DirFrontal = FRotationMatrix(RotYaw).GetUnitAxis(EAxis::Y);
 	AddMovementInput(DirFrontal, Frontal * Speed * Acceleration);
-	
+
 	// Get right vector
 	const FVector DirLateral = FRotationMatrix(RotYaw).GetUnitAxis(EAxis::X);
 	AddMovementInput(DirLateral, Lateral * Speed * Acceleration);
-	
+
 	// Get up vector
 	const FVector DirVertical = FRotationMatrix(RotYaw).GetUnitAxis(EAxis::Z);
 	AddMovementInput(DirVertical, Vertical * Speed * Acceleration);
 }
 
-void ARatasCharacter::Look(const FVector& Value)
-{
+void ARatasCharacter::Look(const FVector& Value) {
 	AddControllerYawInput(Value.X);
 	AddControllerPitchInput(Value.Y);
 }
 
+void ARatasCharacter::GetHit(float Damage) {
+	
+}

@@ -17,8 +17,8 @@ ARatasPropBullet::ARatasPropBullet() {
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 }
 
-void ARatasPropBullet::OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
-                                      const FHitResult& SweepResult) {
+void ARatasPropBullet::OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
+	UE_LOGFMT(LogTemplateCharacter, Log, "TAG {TAG}", ("TAG", OtherComp->ComponentTags));
 	if (OtherComp->ComponentHasTag(TargetTag)) {
 		Cast<ARatasCharacter>(OtherActor)->GetHit(Damage);
 		Destroy();
@@ -26,13 +26,9 @@ void ARatasPropBullet::OnBeginOverlap(class UPrimitiveComponent* Comp, class AAc
 }
 
 void ARatasPropBullet::Tick(float DeltaSeconds) {
-	Super::Tick(DeltaSeconds);
-
-	UE_LOGFMT(LogTemp, Log, "{a} - {b} = {c}", ("b" , DeltaSeconds), ("a", DespawnTimer), ("c", DespawnTimer - DeltaSeconds));
 	DespawnTimer -= DeltaSeconds;
 	if (DespawnTimer <= 0) {
-		UE_LOGFMT(LogTemp, Log, "{Value}", ("Value" , Destroy()));
+		Destroy();
 	}
+	Super::Tick(DeltaSeconds);
 }
-
-void ARatasCharacter::GetHit(const float Damage) {}
