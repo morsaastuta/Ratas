@@ -31,9 +31,7 @@ void ARatasCharacterFoe::BeginPlay() {
 
 bool ARatasCharacterFoe::CheckPlayer(UShapeComponent* Overlap, ARatasCharacterPlayer*& Player) {
 	TArray<AActor*> OverlappingActors;
-
 	Overlap->GetOverlappingActors(OverlappingActors, ARatasCharacterPlayer::StaticClass());
-
 	if (!OverlappingActors.IsEmpty()) {
 		Player = Cast<ARatasCharacterPlayer>(OverlappingActors[0]);
 		return true;
@@ -42,24 +40,21 @@ bool ARatasCharacterFoe::CheckPlayer(UShapeComponent* Overlap, ARatasCharacterPl
 }
 
 void ARatasCharacterFoe::GetHit(const float Damage) {
-	UE_LOGFMT(LogTemplateCharacter, Log, "Me disyte weonm");
 	ChangeHealth(-Damage);
 }
 
 void ARatasCharacterFoe::ChangeHealth(const float Value) {
-	UE_LOGFMT(LogTemp, Log, "{Total} + {Value} = {Result}", ("Value" , Value), ("Total", Health), ("Result", Health + Value));
-
-	Health = FMath::Clamp(Health + Value, 0, HealthMax);
-
-	if (Health <= 0) Die();
-
-	AfterChecks();
+	if (!Dead) {
+		UE_LOGFMT(LogTemp, Log, "{Total} + {Value} = {Result}", ("Value" , Value), ("Total", Health), ("Result", Health + Value));
+		Health = FMath::Clamp(Health + Value, 0, HealthMax);
+		AfterChecks();
+		if (Health <= 0) Die();
+	}
 }
 
 void ARatasCharacterFoe::Die() {
-	if (AssignedWave != nullptr) {
-		AssignedWave->Deaths++;
-	}
+	if (AssignedWave != nullptr) AssignedWave->Deaths++;
+	Dead = true;
 }
 
 void ARatasCharacterFoe::AfterChecks_Implementation() {}
