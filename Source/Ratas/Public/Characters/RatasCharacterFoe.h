@@ -7,9 +7,6 @@
 #include "Ratas/RatasCharacter.h"
 #include "RatasCharacterFoe.generated.h"
 
-/**
- * 
- */
 class USphereComponent;
 class AWave;
 
@@ -24,7 +21,7 @@ class RATAS_API ARatasCharacterFoe : public ARatasCharacter {
 		UFUNCTION(BlueprintCallable, Category="Ratas")
 		void LookAt(FVector Location);
 
-		UPROPERTY(Category=Detector, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
 		AWave* AssignedWave;
 
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true"))
@@ -36,10 +33,11 @@ class RATAS_API ARatasCharacterFoe : public ARatasCharacter {
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Properties, meta = (AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		UArrowComponent* ShootPoint;
 
-
 		virtual void GetHit(float Damage) override;
 
 	protected:
+		bool Dead = false;
+	
 		UPROPERTY(Category=Detector, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		float OverlapRangeDetect;
 

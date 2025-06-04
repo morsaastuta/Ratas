@@ -11,7 +11,6 @@ DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 //////////////////////////////////////////////////////////////////////////
 // ARatasCharacter
-
 ARatasCharacter::ARatasCharacter() {
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
 
