@@ -4,7 +4,6 @@
 #include "Wave.h"
 #include "Characters/RatasCharacterPlayer.h"
 #include "Components/ArrowComponent.h"
-#include "Logging/StructuredLog.h"
 
 ARatasCharacterFoe::ARatasCharacterFoe(): OverlapRangeDetect(0), OverlapRangeAttack(0) {
 	DetectionRange = CreateDefaultSubobject<USphereComponent>(TEXT("DetectionRange"));
@@ -45,7 +44,7 @@ void ARatasCharacterFoe::GetHit(const float Damage) {
 
 void ARatasCharacterFoe::ChangeHealth(const float Value) {
 	if (!Dead) {
-		UE_LOGFMT(LogTemp, Log, "{Total} + {Value} = {Result}", ("Value" , Value), ("Total", Health), ("Result", Health + Value));
+		//UE_LOGFMT(LogTemp, Log, "{Total} + {Value} = {Result}", ("Value" , Value), ("Total", Health), ("Result", Health + Value));
 		Health = FMath::Clamp(Health + Value, 0, HealthMax);
 		AfterChecks();
 		if (Health <= 0) Die();

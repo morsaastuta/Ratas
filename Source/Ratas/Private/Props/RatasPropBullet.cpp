@@ -18,7 +18,6 @@ ARatasPropBullet::ARatasPropBullet() {
 }
 
 void ARatasPropBullet::OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
-	UE_LOGFMT(LogTemplateCharacter, Log, "TAG {TAG}", ("TAG", OtherComp->ComponentTags));
 	if (OtherComp->ComponentHasTag(TargetTag)) {
 		Cast<ARatasCharacter>(OtherActor)->GetHit(Damage);
 		Destroy();

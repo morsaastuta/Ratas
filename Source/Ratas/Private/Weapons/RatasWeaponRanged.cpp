@@ -2,18 +2,14 @@
 
 #include "Weapons/RatasWeaponRanged.h"
 
+#include "Logging/StructuredLog.h"
+
 ARatasWeaponRanged::ARatasWeaponRanged() {
 	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Body"));
 	Mesh->SetupAttachment(Bounds);
 
 	Barrel = CreateDefaultSubobject<UArrowComponent>(TEXT("Barrel"));
 	Barrel->SetupAttachment(Mesh);
-}
-
-void ARatasWeaponRanged::BeginPlay() {
-	Super::BeginPlay();
-
-	Mag = MagMax;
 }
 
 bool ARatasWeaponRanged::CheckTrigger() {
@@ -29,18 +25,14 @@ bool ARatasWeaponRanged::CheckTrigger() {
 
 void ARatasWeaponRanged::Reload() {
 	Reloading = true;
-	RechargeTime = RechargeTimeMax;
+}
+
+void ARatasWeaponRanged::Recharge() {
+	Reloading = false;
+	Mag = MagMax;
 }
 
 void ARatasWeaponRanged::Tick(float DeltaSeconds) {
 	Super::Tick(DeltaSeconds);
-
-	if (Reloading) {
-		RechargeTime -= DeltaSeconds;
-
-		if (RechargeTimeMax <= 0) {
-			Reloading = false;
-			Mag = MagMax;
-		}
-	}
+	
 }

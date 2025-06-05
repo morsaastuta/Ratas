@@ -33,6 +33,7 @@ class RATAS_API ARatasCharacterFoe : public ARatasCharacter {
 		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Properties, meta = (AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		UArrowComponent* ShootPoint;
 
+		UFUNCTION(BlueprintCallable, Category="Ratas")
 		virtual void GetHit(float Damage) override;
 
 	protected:
