@@ -113,7 +113,6 @@ void ARatasCharacterPlayer::TriggerInput() {
 	if (WeaponCurrent != nullptr) {
 		bool canshoot = WeaponCurrent->CheckTrigger();
 		if (canshoot) {
-			UE_LOGFMT(LogTemp, Log, "He entrao");
 			WeaponCurrent->Trigger();
 		}
 	}
@@ -170,7 +169,9 @@ void ARatasCharacterPlayer::SetWeapon(int index) {
 }
 
 void ARatasCharacterPlayer::ReloadInput() {
+	UE_LOGFMT(LogTemp, Log, "Intento recargar");
 	if (WeaponCurrent != nullptr && WeaponCurrent->IsA(ARatasWeaponRanged::StaticClass())) {
+		UE_LOGFMT(LogTemp, Log, "Recargo");
 		Cast<ARatasWeaponRanged>(WeaponCurrent)->Reload();
 	}
 }

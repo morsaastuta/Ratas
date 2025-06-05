@@ -37,10 +37,10 @@ public:
 
 	virtual bool CheckTrigger() override;
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = "Weapon Ranged")
 	void Reload();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintCallable, Category = "Weapon Ranged")
 	void Recharge();
 
 protected:
