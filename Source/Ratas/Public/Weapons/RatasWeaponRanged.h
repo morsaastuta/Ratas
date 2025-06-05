@@ -40,12 +40,13 @@ public:
 	UFUNCTION()
 	void Reload();
 
+	UFUNCTION()
+	void Recharge();
+
 protected:
 
 	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 	bool Reloading;
-
-	virtual void BeginPlay() override;
 
 	virtual void Tick(float DeltaSeconds) override;
 	

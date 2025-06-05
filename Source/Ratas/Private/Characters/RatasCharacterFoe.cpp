@@ -45,7 +45,7 @@ void ARatasCharacterFoe::GetHit(const float Damage) {
 
 void ARatasCharacterFoe::ChangeHealth(const float Value) {
 	if (!Dead) {
-		UE_LOGFMT(LogTemp, Log, "{Total} + {Value} = {Result}", ("Value" , Value), ("Total", Health), ("Result", Health + Value));
+		//UE_LOGFMT(LogTemp, Log, "{Total} + {Value} = {Result}", ("Value" , Value), ("Total", Health), ("Result", Health + Value));
 		Health = FMath::Clamp(Health + Value, 0, HealthMax);
 		AfterChecks();
 		if (Health <= 0) Die();
