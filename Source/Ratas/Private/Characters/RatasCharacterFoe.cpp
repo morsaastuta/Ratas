@@ -4,7 +4,6 @@
 #include "Wave.h"
 #include "Characters/RatasCharacterPlayer.h"
 #include "Components/ArrowComponent.h"
-#include "Logging/StructuredLog.h"
 
 ARatasCharacterFoe::ARatasCharacterFoe(): OverlapRangeDetect(0), OverlapRangeAttack(0) {
 	DetectionRange = CreateDefaultSubobject<USphereComponent>(TEXT("DetectionRange"));
