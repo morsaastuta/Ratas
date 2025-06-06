@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Weapons/RatasWeaponRanged.h"
-
 #include "Logging/StructuredLog.h"
 
 ARatasWeaponRanged::ARatasWeaponRanged() {
@@ -13,12 +12,9 @@ ARatasWeaponRanged::ARatasWeaponRanged() {
 }
 
 bool ARatasWeaponRanged::CheckTrigger() {
-	if (Super::CheckTrigger()) {
-		if (Mag > 0) {
-			Mag--;
-			return true;
-		}
-		return false;
+	if (Super::CheckTrigger() && !Reloading && Mag > 0) {
+		Mag--;
+		return true;
 	}
 	return false;
 }
@@ -30,9 +26,4 @@ void ARatasWeaponRanged::Reload() {
 void ARatasWeaponRanged::Recharge() {
 	Reloading = false;
 	Mag = MagMax;
-}
-
-void ARatasWeaponRanged::Tick(float DeltaSeconds) {
-	Super::Tick(DeltaSeconds);
-	
 }

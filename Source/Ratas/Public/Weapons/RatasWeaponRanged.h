@@ -9,45 +9,39 @@
 #include "RatasWeaponRanged.generated.h"
 
 UCLASS()
-class RATAS_API ARatasWeaponRanged : public ARatasWeapon
-{
+class RATAS_API ARatasWeaponRanged : public ARatasWeapon {
 	GENERATED_BODY()
-	
-public:
 
-	ARatasWeaponRanged();
+	public:
+		ARatasWeaponRanged();
 
-	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
-	TObjectPtr<USkeletalMeshComponent> Mesh;
+		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+		TObjectPtr<USkeletalMeshComponent> Mesh;
 
-	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
-	UArrowComponent* Barrel;
+		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+		UArrowComponent* Barrel;
 
-	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
-	TSubclassOf<ARatasPropBullet> Bullet;
+		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+		TSubclassOf<ARatasPropBullet> Bullet;
 
-	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	float Impulse;
+		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		float Impulse;
 
-	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	int MagMax;
+		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		int MagMax;
 
-	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	int Mag;
+		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		int Mag;
 
-	virtual bool CheckTrigger() override;
+		virtual bool CheckTrigger() override;
 
-	UFUNCTION(BlueprintCallable, Category = "Weapon Ranged")
-	void Reload();
+		UFUNCTION(BlueprintCallable, Category = "Weapon Ranged")
+		void Reload();
 
-	UFUNCTION(BlueprintCallable, Category = "Weapon Ranged")
-	void Recharge();
+		UFUNCTION(BlueprintCallable, Category = "Weapon Ranged")
+		void Recharge();
 
-protected:
-
-	UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
-	bool Reloading;
-
-	virtual void Tick(float DeltaSeconds) override;
-	
+	protected:
+		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		bool Reloading;
 };

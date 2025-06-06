@@ -11,7 +11,6 @@ ARatasWeapon::ARatasWeapon() {
 
 void ARatasWeapon::BeginPlay() {
 	Super::BeginPlay();
-
 	Delay = 0;
 }
 
@@ -35,6 +34,7 @@ void ARatasWeapon::OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor*
 }
 
 void ARatasWeapon::Tick(float DeltaSeconds) {
+	Super::Tick(DeltaSeconds);
 	if (Delay > 0) {
 		Delay -= DeltaSeconds;
 	}

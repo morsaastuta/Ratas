@@ -24,7 +24,6 @@ class ARatasCharacter : public ACharacter {
 		ARatasCharacter();
 
 	protected:
-		virtual void BeginPlay() override;
 		virtual void Tick(float DeltaTime) override;
 
 		//Variables

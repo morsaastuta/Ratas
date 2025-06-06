@@ -23,10 +23,6 @@ ARatasCharacter::ARatasCharacter() {
 	//Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 }
 
-void ARatasCharacter::BeginPlay() {
-	Super::BeginPlay();
-}
-
 void ARatasCharacter::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
