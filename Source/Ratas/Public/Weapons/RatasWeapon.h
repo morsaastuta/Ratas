@@ -7,12 +7,18 @@
 #include "GameFramework/Actor.h"
 #include "RatasWeapon.generated.h"
 
+class ARatasCharacterPlayer;
+class AWave;
+
 UCLASS()
 class RATAS_API ARatasWeapon : public AActor {
 	GENERATED_BODY()
 
 	public:
 		ARatasWeapon();
+
+		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn))
+		AWave* NextWave;
 
 		UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
 		UBoxComponent* Bounds;
@@ -43,6 +49,8 @@ class RATAS_API ARatasWeapon : public AActor {
 		void OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 		virtual void BeginPlay() override;
+
+		void Grab(ARatasCharacterPlayer* Player);
 
 		virtual void Tick(float DeltaSeconds) override;
 };

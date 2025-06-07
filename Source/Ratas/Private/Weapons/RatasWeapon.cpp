@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Weapons/RatasWeapon.h"
+
+#include "Wave.h"
 #include "Ratas/Public/Characters/RatasCharacterPlayer.h"
 
 // Sets default values
@@ -22,15 +24,19 @@ bool ARatasWeapon::CheckTrigger() {
 	return false;
 }
 
-void ARatasWeapon::OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
-                                  const FHitResult& SweepResult) {
+void ARatasWeapon::OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult) {
 	if (OtherActor->IsA(ARatasCharacterPlayer::StaticClass())) {
-		Bounds->UnregisterComponent();
-		ARatasCharacterPlayer* Player = Cast<ARatasCharacterPlayer>(OtherActor);
-		Player->AddWeapon(this);
-		AttachToComponent(Player->Camera, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative, false));
-		Bounds->SetRelativeLocation(FVector(20.f, 20.f, -7.f));
+		Grab(Cast<ARatasCharacterPlayer>(OtherActor));
 	}
+}
+
+void ARatasWeapon::Grab(ARatasCharacterPlayer* Player) {
+	Bounds->UnregisterComponent();
+	Player->AddWeapon(this);
+	AttachToComponent(Player->Camera, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative, false));
+	Bounds->SetRelativeLocation(FVector(20.f, 20.f, -7.f));
+
+	if (NextWave != nullptr) NextWave->Begin();
 }
 
 void ARatasWeapon::Tick(float DeltaSeconds) {

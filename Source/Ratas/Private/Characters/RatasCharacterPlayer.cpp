@@ -39,6 +39,8 @@ ARatasCharacterPlayer::ARatasCharacterPlayer() {
 
 void ARatasCharacterPlayer::BeginPlay() {
 	Super::BeginPlay();
+	GetCharacterMovement()->JumpZVelocity = GetCharacterMovement()->JumpZVelocity * 2;
+	
 	// Eye blend
 	if (IsValid(WidgetReference)) {
 		Viewport = CreateWidget(GetWorld(), WidgetReference);
@@ -52,20 +54,27 @@ void ARatasCharacterPlayer::BeginPlay() {
 void ARatasCharacterPlayer::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
+	// Set ACCELERATION MINIMUM depending on IMMORTAL
+	if (Immortal) AccelerationMin = 0.1f;
+	else AccelerationMin = 0;
+
+	// Prevent ACCELERATION changes while HAS NOT EVER MOVED
 	if (HasEverMoved) {
 		Acceleration = GetCharacterMovement()->GetLastUpdateVelocity() != FVector(0, 0, 0)
-			               ? FMath::Clamp(Acceleration + 0.01f, 0.f, AccelerationMax)
-			               : FMath::Clamp(Acceleration - 0.01f, 0.f, AccelerationMax);
-		if (Immortal && Acceleration <= 0) {
-			Acceleration = AccelerationMin;
-		}
+			               ? FMath::Clamp(Acceleration + 0.01f, AccelerationMin, AccelerationMax)
+			               : FMath::Clamp(Acceleration - 0.01f, AccelerationMin, AccelerationMax);
+	}
 
-		GetCharacterMovement()->MaxAcceleration = Acceleration * 200.f;
+	// Calculations
+	GetCharacterMovement()->MaxAcceleration = Acceleration * 200.f;
+	EyeLeft->SetRelativeRotation(FRotator(EyeLeft->GetRelativeRotation().Pitch, -Acceleration * (FOVAngleMax / 2) / AccelerationMax, EyeLeft->GetRelativeRotation().Roll));
+	EyeRight->SetRelativeRotation(FRotator(EyeRight->GetRelativeRotation().Pitch, Acceleration * (FOVAngleMax / 2) / AccelerationMax, EyeRight->GetRelativeRotation().Roll));
+	EyeLeft->FOVAngle = Acceleration * FOVAngleMax / AccelerationMax;
+	EyeRight->FOVAngle = Acceleration * FOVAngleMax / AccelerationMax;
 
-		EyeLeft->SetRelativeRotation(FRotator(EyeLeft->GetRelativeRotation().Pitch, -Acceleration * (FOVAngleMax / 2) / AccelerationMax, EyeLeft->GetRelativeRotation().Roll));
-		EyeRight->SetRelativeRotation(FRotator(EyeRight->GetRelativeRotation().Pitch, Acceleration * (FOVAngleMax / 2) / AccelerationMax, EyeRight->GetRelativeRotation().Roll));
-		EyeLeft->FOVAngle = Acceleration * FOVAngleMax / AccelerationMax;
-		EyeRight->FOVAngle = Acceleration * FOVAngleMax / AccelerationMax;
+	// Check if ACCELERATION is ZERO
+	if (Acceleration <= 0) {
+		
 	}
 	//UE_LOGFMT(LogTemplateCharacter, Log, "{Value}", ("Value" , Acceleration));
 }
@@ -181,7 +190,5 @@ void ARatasCharacterPlayer::StopInput() {
 }
 
 void ARatasCharacterPlayer::GetHit(const float Damage) {
-	Acceleration -= Damage;
-
-	if (Acceleration <= 0) {}
+	Acceleration = FMath::Clamp(Acceleration + Damage, AccelerationMin, AccelerationMax);
 }
