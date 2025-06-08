@@ -15,33 +15,33 @@ class RATAS_API ARatasWeaponRanged : public ARatasWeapon {
 	public:
 		ARatasWeaponRanged();
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+		UPROPERTY(Category=RatasWeaponRanged, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
 		TObjectPtr<USkeletalMeshComponent> Mesh;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+		UPROPERTY(Category=RatasWeaponRanged, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
 		UArrowComponent* Barrel;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+		UPROPERTY(Category=RatasWeaponRanged, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
 		TSubclassOf<ARatasPropBullet> Bullet;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasWeaponRanged, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		float Impulse;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasWeaponRanged, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		int MagMax;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasWeaponRanged, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		int Mag;
 
 		virtual bool CheckTrigger() override;
 
-		UFUNCTION(BlueprintCallable, Category = "Weapon Ranged")
+		UFUNCTION(Category=RatasWeaponRanged, BlueprintCallable)
 		void Reload();
 
-		UFUNCTION(BlueprintCallable, Category = "Weapon Ranged")
+		UFUNCTION(Category=RatasWeaponRanged, BlueprintCallable)
 		void Recharge();
 
 	protected:
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasWeaponRanged, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		bool Reloading;
 };

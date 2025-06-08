@@ -8,7 +8,7 @@
 #include "RatasCharacterFoe.generated.h"
 
 class USphereComponent;
-class AWave;
+class ARatasWave;
 
 UCLASS()
 class RATAS_API ARatasCharacterFoe : public ARatasCharacter {
@@ -18,50 +18,53 @@ class RATAS_API ARatasCharacterFoe : public ARatasCharacter {
 	public:
 		ARatasCharacterFoe();
 
-		UFUNCTION(BlueprintCallable, Category="Ratas")
+		UFUNCTION(Category=RatasFoe, BlueprintCallable)
 		void LookAt(FVector Location);
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
-		AWave* AssignedWave;
+		UPROPERTY(Category=RatasFoe, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+		ARatasWave* AssignedWave;
 
-		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true"))
+		UPROPERTY(Category=RatasFoe, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		float Health;
 
-		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true"))
+		UPROPERTY(Category=RatasFoe, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		float HealthMax;
 
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Properties, meta = (AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasFoe, EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		UArrowComponent* ShootPoint;
 
-		UFUNCTION(BlueprintCallable, Category="Ratas")
+		UFUNCTION(Category=RatasFoe, BlueprintCallable)
 		virtual void GetHit(float Damage) override;
 
 	protected:
 		bool Dead = false;
-	
-		UPROPERTY(Category=Detector, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+
+		UPROPERTY(Category=RatasFoe, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		float OverlapRangeDetect;
 
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasFoe, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		USphereComponent* DetectionRange;
 
-		UPROPERTY(Category=Detector, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasFoe, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		float OverlapRangeAttack;
 
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasFoe, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		USphereComponent* EngageRange;
 
 		virtual void BeginPlay() override;
 
-		UPROPERTY(EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasFoe, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		FVector TargetLocation;
 
-		UFUNCTION(BlueprintCallable, Category="Ratas")
+		UFUNCTION(Category=RatasFoe, BlueprintCallable)
 		bool CheckPlayer(UShapeComponent* Overlap, ARatasCharacterPlayer*& Player);
 
+		UFUNCTION(Category=RatasFoe, BlueprintCallable)
 		virtual void ChangeHealth(const float Value);
+
+		UFUNCTION(Category=RatasFoe, BlueprintCallable)
 		virtual void Die();
 
-		UFUNCTION(BlueprintNativeEvent, Category="Ratas")
+		UFUNCTION(Category=RatasFoe, BlueprintNativeEvent)
 		void AfterChecks();
 };

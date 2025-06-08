@@ -8,7 +8,7 @@
 #include "RatasWeapon.generated.h"
 
 class ARatasCharacterPlayer;
-class AWave;
+class ARatasWave;
 
 UCLASS()
 class RATAS_API ARatasWeapon : public AActor {
@@ -17,19 +17,19 @@ class RATAS_API ARatasWeapon : public AActor {
 	public:
 		ARatasWeapon();
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn))
-		AWave* NextWave;
+		UPROPERTY(Category=RatasWeapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn))
+		ARatasWave* NextWave;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
+		UPROPERTY(Category=RatasWeapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
 		UBoxComponent* Bounds;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
+		UPROPERTY(Category=RatasWeapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
 		float Damage;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasWeapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		float RechargeTimeMax;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasWeapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		float RechargeTime;
 
 		UFUNCTION()
@@ -39,10 +39,10 @@ class RATAS_API ARatasWeapon : public AActor {
 		void Trigger();
 
 	protected:
-		UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
+		UPROPERTY(Category=RatasWeapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
 		float DelayMax;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
+		UPROPERTY(Category=RatasWeapon, EditAnywhere, meta=(AllowPrivateAccess = "true"))
 		float Delay;
 
 		UFUNCTION()

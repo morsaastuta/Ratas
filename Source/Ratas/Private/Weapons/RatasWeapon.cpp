@@ -2,7 +2,7 @@
 
 #include "Weapons/RatasWeapon.h"
 
-#include "Wave.h"
+#include "RatasWave.h"
 #include "Ratas/Public/Characters/RatasCharacterPlayer.h"
 
 // Sets default values

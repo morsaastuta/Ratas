@@ -1,5 +1,6 @@
 #include "Characters/RatasCharacterPlayer.h"
 #include "EnhancedInputComponent.h"
+#include "RatasWarp.h"
 #include "Blueprint/UserWidget.h"
 #include "Weapons/RatasWeaponRanged.h"
 #include "Components/CapsuleComponent.h"
@@ -40,7 +41,7 @@ ARatasCharacterPlayer::ARatasCharacterPlayer() {
 void ARatasCharacterPlayer::BeginPlay() {
 	Super::BeginPlay();
 	GetCharacterMovement()->JumpZVelocity = GetCharacterMovement()->JumpZVelocity * 2;
-	
+
 	// Eye blend
 	if (IsValid(WidgetReference)) {
 		Viewport = CreateWidget(GetWorld(), WidgetReference);
@@ -73,9 +74,7 @@ void ARatasCharacterPlayer::Tick(float DeltaTime) {
 	EyeRight->FOVAngle = Acceleration * FOVAngleMax / AccelerationMax;
 
 	// Check if ACCELERATION is ZERO
-	if (Acceleration <= 0) {
-		
-	}
+	if (Acceleration <= 0) {}
 	//UE_LOGFMT(LogTemplateCharacter, Log, "{Value}", ("Value" , Acceleration));
 }
 
@@ -174,7 +173,6 @@ void ARatasCharacterPlayer::SetWeapon(int index) {
 	WeaponCurrent->SetActorHiddenInGame(false);
 	WeaponCurrent->SetActorTickEnabled(true);
 	WeaponCurrent->SetActorEnableCollision(true);
-	CallbackChangeWeapon();
 }
 
 void ARatasCharacterPlayer::ReloadInput() {
@@ -191,4 +189,10 @@ void ARatasCharacterPlayer::StopInput() {
 
 void ARatasCharacterPlayer::GetHit(const float Damage) {
 	Acceleration = FMath::Clamp(Acceleration + Damage, AccelerationMin, AccelerationMax);
+}
+
+void ARatasCharacterPlayer::ContactWarp(ARatasWarp* Warp) {
+	CurrentLevel = Warp->CurrentLevel;
+	NextLevel = Warp->NextLevel;
+	ActivateWarp();
 }

@@ -15,25 +15,25 @@ class RATAS_API ARatasPropBullet : public AActor {
 	GENERATED_BODY()
 
 	public:
-		UPROPERTY(Category=Weapon, EditAnywhere)
+		UPROPERTY(Category=RatasPropBullet, EditAnywhere)
 		USphereComponent* Collider;
 
-		UPROPERTY(Category=Weapon, EditAnywhere)
+		UPROPERTY(Category=RatasPropBullet, EditAnywhere)
 		UStaticMeshComponent* Mesh;
 
-		UPROPERTY(Category=Weapon, BlueprintReadWrite, EditAnywhere)
+		UPROPERTY(Category=RatasPropBullet, BlueprintReadWrite, EditAnywhere)
 		UProjectileMovementComponent* ProjectileMovement;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasPropBullet, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		float Damage;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasPropBullet, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		float Speed;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasPropBullet, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		float DespawnTimer;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasPropBullet, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		FName TargetTag;
 
 		ARatasPropBullet();

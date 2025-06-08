@@ -4,7 +4,6 @@
 #include "Ratas/RatasCharacter.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
-#include "Logging/StructuredLog.h"
 
 ARatasPropBullet::ARatasPropBullet() {
 	Collider = CreateDefaultSubobject<USphereComponent>(TEXT("Collider"));

@@ -7,13 +7,9 @@
 #include "RatasGameMode.generated.h"
 
 UCLASS(minimalapi)
-class ARatasGameMode : public AGameModeBase
-{
+class ARatasGameMode : public AGameModeBase {
 	GENERATED_BODY()
 
-public:
-	ARatasGameMode();
+	public:
+		ARatasGameMode();
 };
-
-
-

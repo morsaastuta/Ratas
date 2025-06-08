@@ -61,24 +61,24 @@ class ARatasCharacter : public ACharacter {
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 		UInputAction* SelectWeaponAction4;
 
-		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true"))
+		UPROPERTY(Category = RatasCharacter, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		float Speed;
 
-		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true"))
+		UPROPERTY(Category = RatasCharacter, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 		float Acceleration;
 
-		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category = RatasCharacter, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		float HitCooldownMax;
 
-		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Properties, meta = (AllowPrivateAccess = true))
+		UPROPERTY(Category = RatasCharacter, EditAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = true))
 		float HitCooldown;
 
 		//Functions
 	protected:
-		UFUNCTION(BlueprintCallable, Category="Ratas")
+		UFUNCTION(Category = RatasCharacter, BlueprintCallable)
 		virtual void Move(const FVector& Value);
 
-		UFUNCTION(BlueprintCallable, Category="Ratas")
+		UFUNCTION(Category = RatasCharacter, BlueprintCallable)
 		virtual void Look(const FVector& Value);
 
 	public:

@@ -8,6 +8,7 @@
 #include "RatasCharacterPlayer.generated.h"
 
 class ARatasWeapon;
+class ARatasWarp;
 
 UCLASS()
 class RATAS_API ARatasCharacterPlayer : public ARatasCharacter {
@@ -15,42 +16,42 @@ class RATAS_API ARatasCharacterPlayer : public ARatasCharacter {
 
 	public:
 		//Variables
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		bool Immortal = false;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		bool HasEverMoved = false;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		float FOVAngleMax = 160;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		float AccelerationMin = 0.1f;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		float AccelerationMax = 6.0f;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		UCameraComponent* Camera;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		USceneCaptureComponent2D* EyeLeft;
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		USceneCaptureComponent2D* EyeRight;
 
-		UPROPERTY(EditDefaultsOnly, Category = "UI")
+		UPROPERTY(Category=RatasPlayer, EditDefaultsOnly)
 		TSubclassOf<class UUserWidget> WidgetReference;
 
-		UPROPERTY()
+		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		UUserWidget* Viewport;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		ARatasWeapon* WeaponCurrent;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		TArray<ARatasWeapon*> Arsenal;
 
-		UPROPERTY(Category=Weapon, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		bool IsMoving;
 
 		ARatasCharacterPlayer();
@@ -59,13 +60,22 @@ class RATAS_API ARatasCharacterPlayer : public ARatasCharacter {
 		virtual void Tick(float DeltaTime) override;
 		void AddWeapon(ARatasWeapon* Weapon);
 
-		UFUNCTION(BlueprintCallable, Category="Ratas")
+		UFUNCTION(Category=RatasPlayer, BlueprintCallable)
 		virtual void GetHit(const float Damage) override;
 
-		UFUNCTION(BlueprintImplementableEvent, Category = "RatasCallback")
-		void CallbackChangeWeapon();
+		UFUNCTION(Category=RatasPlayer, BlueprintCallable)
+		void ContactWarp(ARatasWarp* Warp);
+
+		UFUNCTION(Category=RatasPlayer, BlueprintImplementableEvent)
+		void ActivateWarp();
 
 	protected:
+		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		TSoftObjectPtr<UWorld> CurrentLevel;
+
+		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		TSoftObjectPtr<UWorld> NextLevel;
+
 		virtual void BeginPlay() override;
 		void SetWeapon(int index);
 
