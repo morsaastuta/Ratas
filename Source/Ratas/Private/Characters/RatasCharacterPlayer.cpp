@@ -15,17 +15,20 @@ ARatasCharacterPlayer::ARatasCharacterPlayer() {
 	// Camera
 	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	Camera->SetupAttachment(GetCapsuleComponent());
-	Camera->SetRelativeLocation(FVector(-10.f, 0.f, 60.f));
+	Camera->SetRelativeLocation(FVector(0.f, 0.f, 0.f));
 	Camera->bUsePawnControlRotation = true;
 	GetMesh()->SetupAttachment(Camera);
 
 	// Eyes
 	EyeLeft = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("EyeLeft"));
+	EyeCenter = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("EyeCenter"));
 	EyeRight = CreateDefaultSubobject<USceneCaptureComponent2D>(TEXT("EyeRight"));
-	EyeLeft->SetupAttachment(GetCapsuleComponent());
-	EyeRight->SetupAttachment(GetCapsuleComponent());
-	EyeLeft->SetRelativeLocation(FVector(-10.f, 0.f, 60.f));
-	EyeRight->SetRelativeLocation(FVector(-10.f, 0.f, 60.f));
+	EyeLeft->SetupAttachment(Camera);
+	EyeCenter->SetupAttachment(Camera);
+	EyeRight->SetupAttachment(Camera);
+	EyeLeft->SetRelativeLocation(FVector(-48.f, 0.f, 50.f));
+	EyeCenter->SetRelativeLocation(FVector(-48.f, 0.f, 50.f));
+	EyeRight->SetRelativeLocation(FVector(-48.f, 0.f, 50.f));
 	// Eye blend
 	if (IsValid(WidgetReference)) {
 		Viewport = CreateWidget(GetWorld(), WidgetReference);
@@ -40,6 +43,9 @@ ARatasCharacterPlayer::ARatasCharacterPlayer() {
 
 void ARatasCharacterPlayer::BeginPlay() {
 	Super::BeginPlay();
+	EyeLeft->SetupAttachment(Camera);
+	EyeCenter->SetupAttachment(Camera);
+	EyeRight->SetupAttachment(Camera);
 	GetCharacterMovement()->JumpZVelocity = GetCharacterMovement()->JumpZVelocity * 2;
 
 	// Eye blend
@@ -68,13 +74,11 @@ void ARatasCharacterPlayer::Tick(float DeltaTime) {
 
 	// Calculations
 	GetCharacterMovement()->MaxAcceleration = Acceleration * 200.f;
-	EyeLeft->SetRelativeRotation(FRotator(EyeLeft->GetRelativeRotation().Pitch, -Acceleration * (FOVAngleMax / 2) / AccelerationMax, EyeLeft->GetRelativeRotation().Roll));
-	EyeRight->SetRelativeRotation(FRotator(EyeRight->GetRelativeRotation().Pitch, Acceleration * (FOVAngleMax / 2) / AccelerationMax, EyeRight->GetRelativeRotation().Roll));
+	EyeLeft->SetRelativeRotation(FRotator(EyeLeft->GetRelativeRotation().Pitch, -Acceleration * FOVAngleMax / AccelerationMax, EyeLeft->GetRelativeRotation().Roll));
+	EyeRight->SetRelativeRotation(FRotator(EyeRight->GetRelativeRotation().Pitch, Acceleration * FOVAngleMax / AccelerationMax, EyeRight->GetRelativeRotation().Roll));
 	EyeLeft->FOVAngle = Acceleration * FOVAngleMax / AccelerationMax;
+	EyeCenter->FOVAngle = Acceleration * FOVAngleMax / AccelerationMax;
 	EyeRight->FOVAngle = Acceleration * FOVAngleMax / AccelerationMax;
-
-	// Check if ACCELERATION is ZERO
-	if (Acceleration <= 0) {}
 	//UE_LOGFMT(LogTemplateCharacter, Log, "{Value}", ("Value" , Acceleration));
 }
 

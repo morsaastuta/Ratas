@@ -37,6 +37,8 @@ class RATAS_API ARatasCharacterPlayer : public ARatasCharacter {
 		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		USceneCaptureComponent2D* EyeLeft;
 		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		USceneCaptureComponent2D* EyeCenter;
+		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		USceneCaptureComponent2D* EyeRight;
 
 		UPROPERTY(Category=RatasPlayer, EditDefaultsOnly)
