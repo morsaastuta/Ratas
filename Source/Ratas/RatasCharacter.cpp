@@ -5,27 +5,15 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Engine/LocalPlayer.h"
-#include "Logging/StructuredLog.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
-//////////////////////////////////////////////////////////////////////////
-// ARatasCharacter
 ARatasCharacter::ARatasCharacter() {
 	GetCapsuleComponent()->InitCapsuleSize(55.f, 96.0f);
-
-	//Mesh1P = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("CharacterMesh1P"));
-	//Mesh1P->SetOnlyOwnerSee(true);
-
-	//Mesh1P->bCastDynamicShadow = false;
-	//Mesh1P->CastShadow = false;
-	//Mesh1P->SetRelativeRotation(FRotator(0.9f, -19.19f, 5.2f));
-	//Mesh1P->SetRelativeLocation(FVector(-30.f, 0.f, -150.f));
 }
 
 void ARatasCharacter::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-
 	if (HitCooldown <= HitCooldownMax) HitCooldown += DeltaTime;
 }
 
@@ -56,6 +44,4 @@ void ARatasCharacter::Look(const FVector& Value) {
 	AddControllerPitchInput(Value.Y);
 }
 
-void ARatasCharacter::GetHit(float Damage) {
-	
-}
+void ARatasCharacter::GetHit(float Damage) {}

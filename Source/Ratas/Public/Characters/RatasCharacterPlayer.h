@@ -9,6 +9,7 @@
 
 class ARatasWeapon;
 class ARatasWarp;
+class URatasViewport;
 
 UCLASS()
 class RATAS_API ARatasCharacterPlayer : public ARatasCharacter {
@@ -60,7 +61,7 @@ class RATAS_API ARatasCharacterPlayer : public ARatasCharacter {
 
 		virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 		virtual void Tick(float DeltaTime) override;
-		void AddWeapon(ARatasWeapon* Weapon);
+		void AddWeapon(const ARatasWeapon* Weapon);
 
 		UFUNCTION(Category=RatasPlayer, BlueprintCallable)
 		virtual void GetHit(const float Damage) override;
@@ -79,7 +80,7 @@ class RATAS_API ARatasCharacterPlayer : public ARatasCharacter {
 		TSoftObjectPtr<UWorld> NextLevel;
 
 		virtual void BeginPlay() override;
-		void SetWeapon(int index);
+		void SetWeapon(int Index);
 
 		void MoveInput(const FInputActionValue& Value);
 		void LookInput(const FInputActionValue& Value);

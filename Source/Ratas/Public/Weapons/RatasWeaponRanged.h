@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ArrowComponent.h"
-#include "Props/RatasPropBullet.h"
+#include "Props/RatasBullet.h"
 #include "Weapons/RatasWeapon.h"
 #include "RatasWeaponRanged.generated.h"
 
@@ -22,7 +22,7 @@ class RATAS_API ARatasWeaponRanged : public ARatasWeapon {
 		UArrowComponent* Barrel;
 
 		UPROPERTY(Category=RatasWeaponRanged, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true"))
-		TSubclassOf<ARatasPropBullet> Bullet;
+		TSubclassOf<ARatasBullet> Bullet;
 
 		UPROPERTY(Category=RatasWeaponRanged, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		float Impulse;

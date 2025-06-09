@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Weapons/RatasWeaponRanged.h"
-#include "Logging/StructuredLog.h"
 
 ARatasWeaponRanged::ARatasWeaponRanged() {
 	Mesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Body"));

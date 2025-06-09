@@ -1,14 +1,14 @@
 #include "Characters/RatasCharacterPlayer.h"
 #include "EnhancedInputComponent.h"
+#include "RatasViewport.h"
 #include "RatasWarp.h"
 #include "Blueprint/UserWidget.h"
 #include "Weapons/RatasWeaponRanged.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/SceneCaptureComponent2D.h"
 #include "GameFramework/CharacterMovementComponent.h"
-#include "Logging/StructuredLog.h"
+#include "UniversalObjectLocators/UniversalObjectLocatorUtils.h"
 
-// Sets default values
 ARatasCharacterPlayer::ARatasCharacterPlayer() {
 	PrimaryActorTick.bCanEverTick = true;
 
@@ -30,9 +30,7 @@ ARatasCharacterPlayer::ARatasCharacterPlayer() {
 	EyeCenter->SetRelativeLocation(FVector(-48.f, 0.f, 50.f));
 	EyeRight->SetRelativeLocation(FVector(-48.f, 0.f, 50.f));
 	// Eye blend
-	if (IsValid(WidgetReference)) {
-		Viewport = CreateWidget(GetWorld(), WidgetReference);
-	}
+	if (IsValid(WidgetReference)) Viewport = CreateWidget(GetWorld(), WidgetReference);
 
 	if (IsValid(Viewport)) {
 		Viewport->AddToViewport();
@@ -43,19 +41,18 @@ ARatasCharacterPlayer::ARatasCharacterPlayer() {
 
 void ARatasCharacterPlayer::BeginPlay() {
 	Super::BeginPlay();
+	
 	EyeLeft->SetupAttachment(Camera);
 	EyeCenter->SetupAttachment(Camera);
 	EyeRight->SetupAttachment(Camera);
 	GetCharacterMovement()->JumpZVelocity = GetCharacterMovement()->JumpZVelocity * 2;
 
 	// Eye blend
-	if (IsValid(WidgetReference)) {
-		Viewport = CreateWidget(GetWorld(), WidgetReference);
-	}
+	if (IsValid(WidgetReference)) Viewport = CreateWidget(GetWorld(), WidgetReference);
 
-	if (IsValid(Viewport)) {
-		Viewport->AddToViewport();
-	}
+	if (IsValid(Viewport)) Viewport->AddToViewport();
+	
+	Cast<URatasViewport>(Viewport)->CallHelp(1, true);
 }
 
 void ARatasCharacterPlayer::Tick(float DeltaTime) {
@@ -74,8 +71,8 @@ void ARatasCharacterPlayer::Tick(float DeltaTime) {
 
 	// Calculations
 	GetCharacterMovement()->MaxAcceleration = Acceleration * 200.f;
-	EyeLeft->SetRelativeRotation(FRotator(EyeLeft->GetRelativeRotation().Pitch, -Acceleration * FOVAngleMax / AccelerationMax, EyeLeft->GetRelativeRotation().Roll));
-	EyeRight->SetRelativeRotation(FRotator(EyeRight->GetRelativeRotation().Pitch, Acceleration * FOVAngleMax / AccelerationMax, EyeRight->GetRelativeRotation().Roll));
+	EyeLeft->SetRelativeRotation(FRotator(0, -Acceleration * FOVAngleMax / AccelerationMax, 0));
+	EyeRight->SetRelativeRotation(FRotator(0, Acceleration * FOVAngleMax / AccelerationMax, 0));
 	EyeLeft->FOVAngle = Acceleration * FOVAngleMax / AccelerationMax;
 	EyeCenter->FOVAngle = Acceleration * FOVAngleMax / AccelerationMax;
 	EyeRight->FOVAngle = Acceleration * FOVAngleMax / AccelerationMax;
@@ -113,6 +110,7 @@ void ARatasCharacterPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInp
 
 void ARatasCharacterPlayer::MoveInput(const FInputActionValue& Value) {
 	Move(Value.Get<FVector3d>());
+	Cast<URatasViewport>(Viewport)->CallHelp(1, false);
 	HasEverMoved = true;
 }
 
@@ -122,27 +120,22 @@ void ARatasCharacterPlayer::LookInput(const FInputActionValue& Value) {
 }
 
 void ARatasCharacterPlayer::TriggerInput() {
-	if (WeaponCurrent != nullptr) {
-		bool canshoot = WeaponCurrent->CheckTrigger();
-		if (canshoot) {
-			WeaponCurrent->Trigger();
-		}
-	}
+	if (IsValid(WeaponCurrent) && WeaponCurrent->CheckTrigger()) WeaponCurrent->Trigger();
 }
 
 void ARatasCharacterPlayer::NextWeaponInput() {
 	if (Arsenal.Num() > 0) {
-		int index = Arsenal.Find(WeaponCurrent) + 1;
-		if (index >= Arsenal.Num()) index = 0;
-		SetWeapon(index);
+		int Index = Arsenal.Find(WeaponCurrent) + 1;
+		if (Index >= Arsenal.Num()) Index = 0;
+		SetWeapon(Index);
 	}
 }
 
 void ARatasCharacterPlayer::PrevWeaponInput() {
 	if (Arsenal.Num() > 0) {
-		int index = Arsenal.Find(WeaponCurrent) - 1;
-		if (index < 0) index = Arsenal.Num() - 1;
-		SetWeapon(index);
+		int Index = Arsenal.Find(WeaponCurrent) - 1;
+		if (Index < 0) Index = Arsenal.Num() - 1;
+		SetWeapon(Index);
 	}
 }
 
@@ -162,28 +155,40 @@ void ARatasCharacterPlayer::SelectWeaponInput4() {
 	if (Arsenal.Num() >= 4) SetWeapon(3);
 }
 
-void ARatasCharacterPlayer::AddWeapon(ARatasWeapon* Weapon) {
-	Arsenal.Add(Weapon);
-	SetWeapon(Arsenal.Num() - 1);
+void ARatasCharacterPlayer::AddWeapon(const ARatasWeapon* Weapon) {
+	if (Arsenal.Num() <= 0 || !Arsenal.ContainsByPredicate([&](const UObject* Object) { return Object->GetClass() == Weapon->GetClass(); })) {
+		ARatasWeapon* AddedWeapon = Cast<ARatasWeapon>(UE::UniversalObjectLocator::SpawnActorForLocator(this->GetWorld(), Weapon->GetClass(), FName(Weapon->GetName())));
+
+		AddedWeapon->Bounds->UnregisterComponent();
+		AddedWeapon->AttachToComponent(Camera, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative, false));
+		AddedWeapon->Bounds->SetRelativeLocation(FVector(20.f, 20.f, -7.f));
+
+		Cast<URatasViewport>(Viewport)->CallHelp(2, true);
+		if (Arsenal.Num() > 0) Cast<URatasViewport>(Viewport)->CallHelp(3, true);
+
+		Arsenal.Add(AddedWeapon);
+		SetWeapon(Arsenal.Num() - 1);
+	}
 }
 
-void ARatasCharacterPlayer::SetWeapon(int index) {
-	if (WeaponCurrent != nullptr) {
+void ARatasCharacterPlayer::SetWeapon(const int Index) {
+	Cast<URatasViewport>(Viewport)->CallHelp(3, true);
+	
+	if (IsValid(WeaponCurrent)) {
 		WeaponCurrent->SetActorHiddenInGame(true);
 		WeaponCurrent->SetActorTickEnabled(false);
 		WeaponCurrent->SetActorEnableCollision(false);
 	}
-	WeaponCurrent = Arsenal[index];
+	WeaponCurrent = Arsenal[Index];
 	WeaponCurrent->SetActorHiddenInGame(false);
 	WeaponCurrent->SetActorTickEnabled(true);
 	WeaponCurrent->SetActorEnableCollision(true);
 }
 
 void ARatasCharacterPlayer::ReloadInput() {
-	UE_LOGFMT(LogTemp, Log, "Intento recargar");
-	if (WeaponCurrent != nullptr && WeaponCurrent->IsA(ARatasWeaponRanged::StaticClass())) {
-		UE_LOGFMT(LogTemp, Log, "Recargo");
+	if (IsValid(WeaponCurrent) && WeaponCurrent->IsA(ARatasWeaponRanged::StaticClass())) {
 		Cast<ARatasWeaponRanged>(WeaponCurrent)->Reload();
+		Cast<URatasViewport>(Viewport)->CallHelp(2, false);
 	}
 }
 

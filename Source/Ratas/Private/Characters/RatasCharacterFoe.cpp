@@ -52,7 +52,7 @@ void ARatasCharacterFoe::ChangeHealth(const float Value) {
 }
 
 void ARatasCharacterFoe::Die() {
-	if (AssignedWave != nullptr) AssignedWave->Deaths++;
+	if (IsValid(AssignedWave)) AssignedWave->Deaths++;
 	Dead = true;
 }
 

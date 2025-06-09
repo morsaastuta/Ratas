@@ -31,12 +31,11 @@ void ARatasWeapon::OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor*
 }
 
 void ARatasWeapon::Grab(ARatasCharacterPlayer* Player) {
-	Bounds->UnregisterComponent();
 	Player->AddWeapon(this);
-	AttachToComponent(Player->Camera, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative, false));
-	Bounds->SetRelativeLocation(FVector(20.f, 20.f, -7.f));
 
-	if (NextWave != nullptr) NextWave->Begin();
+	if (IsValid(NextWave)) NextWave->Begin();
+
+	Destroy();
 }
 
 void ARatasWeapon::Tick(float DeltaSeconds) {

@@ -4,14 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "RatasPropBullet.generated.h"
+#include "RatasBullet.generated.h"
 
 class USphereComponent;
 class UStaticMeshComponent;
 class UProjectileMovementComponent;
 
 UCLASS()
-class RATAS_API ARatasPropBullet : public AActor {
+class RATAS_API ARatasBullet : public AActor {
 	GENERATED_BODY()
 
 	public:
@@ -36,7 +36,7 @@ class RATAS_API ARatasPropBullet : public AActor {
 		UPROPERTY(Category=RatasPropBullet, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		FName TargetTag;
 
-		ARatasPropBullet();
+		ARatasBullet();
 
 		UFUNCTION()
 		void OnBeginOverlap(class UPrimitiveComponent* Comp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
