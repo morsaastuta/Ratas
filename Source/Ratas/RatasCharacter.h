@@ -82,5 +82,6 @@ class ARatasCharacter : public ACharacter {
 		virtual void Look(const FVector& Value);
 
 	public:
+		UFUNCTION(Category=RatasCharacter, BlueprintCallable)
 		virtual void GetHit(float Damage);
 };

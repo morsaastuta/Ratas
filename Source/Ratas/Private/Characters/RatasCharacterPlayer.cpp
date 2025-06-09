@@ -183,6 +183,7 @@ void ARatasCharacterPlayer::SetWeapon(const int Index) {
 			WeaponCurrent->SetActorTickEnabled(false);
 			WeaponCurrent->SetActorEnableCollision(false);
 		}
+		
 		WeaponCurrent = Arsenal[Index];
 		WeaponCurrent->SetActorHiddenInGame(false);
 		WeaponCurrent->SetActorTickEnabled(true);
@@ -202,7 +203,7 @@ void ARatasCharacterPlayer::StopInput() {
 }
 
 void ARatasCharacterPlayer::GetHit(const float Damage) {
-	Acceleration = FMath::Clamp(Acceleration + Damage, AccelerationMin, AccelerationMax);
+	Acceleration = FMath::Clamp(Acceleration - Damage, AccelerationMin, AccelerationMax);
 }
 
 void ARatasCharacterPlayer::ContactWarp(ARatasWarp* Warp) {

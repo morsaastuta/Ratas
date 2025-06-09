@@ -66,7 +66,6 @@ class RATAS_API ARatasCharacterPlayer : public ARatasCharacter {
 		virtual void Tick(float DeltaTime) override;
 		void AddWeapon(const ARatasWeapon* Weapon);
 
-		UFUNCTION(Category=RatasPlayer, BlueprintCallable)
 		virtual void GetHit(const float Damage) override;
 
 		UFUNCTION(Category=RatasPlayer, BlueprintCallable)
