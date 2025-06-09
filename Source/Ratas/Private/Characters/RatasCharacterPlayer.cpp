@@ -7,6 +7,7 @@
 #include "Components/CapsuleComponent.h"
 #include "Components/SceneCaptureComponent2D.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "UniversalObjectLocators/UniversalObjectLocatorUtils.h"
 
 ARatasCharacterPlayer::ARatasCharacterPlayer() {
@@ -41,7 +42,7 @@ ARatasCharacterPlayer::ARatasCharacterPlayer() {
 
 void ARatasCharacterPlayer::BeginPlay() {
 	Super::BeginPlay();
-	
+
 	EyeLeft->SetupAttachment(Camera);
 	EyeCenter->SetupAttachment(Camera);
 	EyeRight->SetupAttachment(Camera);
@@ -51,7 +52,7 @@ void ARatasCharacterPlayer::BeginPlay() {
 	if (IsValid(WidgetReference)) Viewport = CreateWidget(GetWorld(), WidgetReference);
 
 	if (IsValid(Viewport)) Viewport->AddToViewport();
-	
+
 	Cast<URatasViewport>(Viewport)->CallHelp(1, true);
 }
 
@@ -172,17 +173,21 @@ void ARatasCharacterPlayer::AddWeapon(const ARatasWeapon* Weapon) {
 }
 
 void ARatasCharacterPlayer::SetWeapon(const int Index) {
-	Cast<URatasViewport>(Viewport)->CallHelp(3, true);
-	
-	if (IsValid(WeaponCurrent)) {
-		WeaponCurrent->SetActorHiddenInGame(true);
-		WeaponCurrent->SetActorTickEnabled(false);
-		WeaponCurrent->SetActorEnableCollision(false);
+	if (Arsenal.IndexOfByKey(WeaponCurrent) != Index) {
+		UGameplayStatics::PlaySound2D(this, WeaponGetSound);
+
+		Cast<URatasViewport>(Viewport)->CallHelp(3, true);
+
+		if (IsValid(WeaponCurrent)) {
+			WeaponCurrent->SetActorHiddenInGame(true);
+			WeaponCurrent->SetActorTickEnabled(false);
+			WeaponCurrent->SetActorEnableCollision(false);
+		}
+		WeaponCurrent = Arsenal[Index];
+		WeaponCurrent->SetActorHiddenInGame(false);
+		WeaponCurrent->SetActorTickEnabled(true);
+		WeaponCurrent->SetActorEnableCollision(true);
 	}
-	WeaponCurrent = Arsenal[Index];
-	WeaponCurrent->SetActorHiddenInGame(false);
-	WeaponCurrent->SetActorTickEnabled(true);
-	WeaponCurrent->SetActorEnableCollision(true);
 }
 
 void ARatasCharacterPlayer::ReloadInput() {

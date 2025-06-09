@@ -16,6 +16,9 @@ class RATAS_API ARatasCharacterPlayer : public ARatasCharacter {
 	GENERATED_BODY()
 
 	public:
+		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
+		USoundWave* WeaponGetSound;
+
 		//Variables
 		UPROPERTY(Category=RatasPlayer, EditAnywhere, BlueprintReadWrite, meta=(AllowPrivateAccess = "true", ExposeOnSpawn = true))
 		bool Immortal = false;
