@@ -180,13 +180,11 @@ void ARatasCharacterPlayer::SetWeapon(const int Index) {
 
 		if (IsValid(WeaponCurrent)) {
 			WeaponCurrent->SetActorHiddenInGame(true);
-			WeaponCurrent->SetActorTickEnabled(false);
 			WeaponCurrent->SetActorEnableCollision(false);
 		}
 		
 		WeaponCurrent = Arsenal[Index];
 		WeaponCurrent->SetActorHiddenInGame(false);
-		WeaponCurrent->SetActorTickEnabled(true);
 		WeaponCurrent->SetActorEnableCollision(true);
 	}
 }
