@@ -162,7 +162,9 @@ void ARatasCharacterPlayer::AddWeapon(const ARatasWeapon* Weapon) {
 
 		AddedWeapon->Bounds->UnregisterComponent();
 		AddedWeapon->AttachToComponent(Camera, FAttachmentTransformRules(EAttachmentRule::SnapToTarget, EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative, false));
-		AddedWeapon->Bounds->SetRelativeLocation(FVector(20.f, 20.f, -7.f));
+		AddedWeapon->Bounds->SetRelativeLocation(FVector(40.f, 40.f, -7.f));
+		FRotator Rotation = AddedWeapon->Bounds->GetRelativeRotation();
+		AddedWeapon->Bounds->SetRelativeRotation(FRotator(Rotation.Pitch, Rotation.Roll, Rotation.Yaw - 8));
 
 		Cast<URatasViewport>(Viewport)->CallHelp(2, true);
 		if (Arsenal.Num() > 0) Cast<URatasViewport>(Viewport)->CallHelp(3, true);
