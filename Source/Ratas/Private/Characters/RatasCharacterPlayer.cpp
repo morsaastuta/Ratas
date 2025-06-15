@@ -178,7 +178,7 @@ void ARatasCharacterPlayer::SetWeapon(const int Index) {
 	if (Arsenal.IndexOfByKey(WeaponCurrent) != Index) {
 		UGameplayStatics::PlaySound2D(this, WeaponGetSound);
 
-		Cast<URatasViewport>(Viewport)->CallHelp(3, true);
+		if (Arsenal.Num() > 1 && WeaponCurrent == Arsenal[1]) Cast<URatasViewport>(Viewport)->CallHelp(3, false);
 
 		if (IsValid(WeaponCurrent)) {
 			WeaponCurrent->SetActorHiddenInGame(true);
